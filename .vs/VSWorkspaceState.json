@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\MiniSupermarket.API",
+    "\\MiniSupermarket.API\\MiniSupermarket.API",
+    "\\MiniSupermarket.API\\MiniSupermarket.API\\Controllers"
   ],
-  "SelectedNode": "\\MiniSupermarket.API.sln",
+  "SelectedNode": "\\MiniSupermarket.API\\MiniSupermarket.API\\Controllers\\CategoriesController.cs",
   "PreviewInSolutionExplorer": false
 }
