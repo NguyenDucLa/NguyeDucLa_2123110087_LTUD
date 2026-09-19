@@ -30,6 +30,7 @@ MiniSupermarketSystem/
 └── MiniSupermarket.WinForms/     # Dự án Windows Forms (Frontend Client)
     └── FormCategoryManagement.cs # Giao diện quản lý danh mục CRUD
 
+```
 ---
 
 # 🛒 Buổi 02: Xác thực & Phân quyền hệ thống với JWT (Web API & WinForms)
