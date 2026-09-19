@@ -30,6 +30,8 @@ MiniSupermarketSystem/
 └── MiniSupermarket.WinForms/     # Dự án Windows Forms (Frontend Client)
     └── FormCategoryManagement.cs # Giao diện quản lý danh mục CRUD
 
+---
+
 # 🛒 Buổi 02: Xác thực & Phân quyền hệ thống với JWT (Web API & WinForms)
 
 Dự án mô phỏng ứng dụng **Quản lý Siêu thị Mini (MiniSupermarket)** kết hợp kiến trúc **RESTful Web API (ASP.NET Core)** và giao diện desktop **WinForms (.NET Framework / .NET Core)**.
@@ -94,3 +96,4 @@ Buổi 02 tập trung vào việc cài đặt cơ chế **Xác thực (Authentic
 - [x] Thiết kế Form Login trên WinForms
 - [x] Lưu trữ Token vào Session và gửi đính kèm HTTP Request Header
 - [x] Hoàn thiện tài liệu README cho Buổi 02
+
