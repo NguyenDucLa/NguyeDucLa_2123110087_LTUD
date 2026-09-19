@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization; // Thêm thư viện để dùng Authorize
+using Microsoft.AspNetCore.Mvc;
 using MiniSupermarket.API.Models;
 
 namespace MiniSupermarket.API.Controllers
 {
     [Route("api/[controller]")] // Định tuyến cơ sở: /api/categories
     [ApiController]
+    [Authorize] // Bắt buộc Client phải gửi JWT Token hợp lệ mới được truy cập các API bên dưới
     public class CategoriesController : ControllerBase
     {
 
@@ -98,6 +100,25 @@ namespace MiniSupermarket.API.Controllers
             _categories.Remove(cat);
             return NoContent();
         }
+
+        // ==========================================
+        // BỔ SUNG: MÁY CHỦ THỬ NGHIỆM PHÂN QUYỀN
+        // ==========================================
+
+        // Chỉ dành cho tài khoản có Role là "Admin"
+        [HttpGet("admin-dashboard")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult GetAdminDashboard()
+        {
+            return Ok(new { message = "Chào mừng Admin! Bạn có toàn quyền quản trị hệ thống siêu thị mini." });
+        }
+
+        // Dành cho cả "Admin" lẫn "Cashier"
+        [HttpGet("staff-pos")]
+        [Authorize(Roles = "Admin,Cashier")]
+        public IActionResult GetStaffPos()
+        {
+            return Ok(new { message = "Màn hình POS Thu ngân sẵn sàng phục vụ bán hàng." });
+        }
     }
 }
-

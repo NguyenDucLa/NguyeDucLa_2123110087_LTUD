@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MiniSupermarket.WinForms")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5f2ce9bccb87ea9f5e0c940ebc10c81d41f42928")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f27bff21b819757146bcf3fbe71f2de540c9675f")]
 [assembly: System.Reflection.AssemblyProductAttribute("MiniSupermarket.WinForms")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MiniSupermarket.WinForms")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

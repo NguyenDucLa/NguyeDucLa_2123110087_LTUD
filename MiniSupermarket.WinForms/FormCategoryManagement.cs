@@ -1,20 +1,34 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net.Http.Headers; // Thêm thư viện để đính kèm Authorization Header
+using System.Net.Http.Json;
 using System.Windows.Forms;
 
 namespace MiniSupermarket.WinForms
 {
     public partial class FormCategoryManagement : Form
     {
-
-        // Khởi tạo HttpClient tĩnh kết nối trực tiếp đến Web API (Đảm bảo số Port https://localhost:7075 khớp với API của bạn)
-        private static readonly HttpClient _client = new HttpClient
-        {
-            BaseAddress = new Uri("https://localhost:7075/api/")
-        };
+        // Địa chỉ Base API (Thay đổi cổng Port localhost nếu cần)
+        private const string ApiBaseUrl = "https://localhost:7075/api/";
 
         public FormCategoryManagement()
         {
             InitializeComponent();
+        }
+
+        // Hàm hỗ trợ tạo HttpClient và đính kèm JWT Bearer Token tự động
+        private HttpClient GetAuthenticatedClient()
+        {
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri(ApiBaseUrl)
+            };
+
+            // Nếu đã lưu Token trong SessionManager thì gắn vào Header
+            if (!string.IsNullOrEmpty(SessionManager.JwtToken))
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", SessionManager.JwtToken);
+            }
+
+            return client;
         }
 
         // Sự kiện Form vừa bật lên: Tự động tải dữ liệu từ API lên bảng
@@ -28,13 +42,14 @@ namespace MiniSupermarket.WinForms
         {
             try
             {
+                using var client = GetAuthenticatedClient();
                 // Gửi request GET tới endpoint "categories", tự động giải tuần tự hóa chuỗi JSON thành List<CategoryDto>
-                var categories = await _client.GetFromJsonAsync<List<CategoryDto>>("categories");
+                var categories = await client.GetFromJsonAsync<List<CategoryDto>>("categories");
                 dgvCategories.DataSource = categories; // Gán nguồn dữ liệu cho bảng hiển thị
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi kết nối Server: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi quyền truy cập hoặc mất kết nối Server: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -65,8 +80,8 @@ namespace MiniSupermarket.WinForms
                 Description = txtDescription.Text
             };
 
-            // Gửi request POST kèm theo đối tượng dạng JSON
-            var response = await _client.PostAsJsonAsync("categories", newCat);
+            using var client = GetAuthenticatedClient();
+            var response = await client.PostAsJsonAsync("categories", newCat);
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Thêm mới thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -75,7 +90,7 @@ namespace MiniSupermarket.WinForms
             }
             else
             {
-                MessageBox.Show("Thêm mới thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Thêm mới thất bại! Lỗi: " + response.StatusCode, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -96,8 +111,8 @@ namespace MiniSupermarket.WinForms
                 Description = txtDescription.Text
             };
 
-            // Gửi request PUT kèm ID trên đường dẫn URI
-            var response = await _client.PutAsJsonAsync($"categories/{id}", updateCat);
+            using var client = GetAuthenticatedClient();
+            var response = await client.PutAsJsonAsync($"categories/{id}", updateCat);
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Cập nhật thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -106,7 +121,7 @@ namespace MiniSupermarket.WinForms
             }
             else
             {
-                MessageBox.Show("Cập nhật thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Cập nhật thất bại! Lỗi: " + response.StatusCode, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -123,7 +138,8 @@ namespace MiniSupermarket.WinForms
             var confirm = MessageBox.Show($"Bạn có chắc muốn xóa nhóm hàng ID = {id}?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (confirm == DialogResult.Yes)
             {
-                var response = await _client.DeleteAsync($"categories/{id}");
+                using var client = GetAuthenticatedClient();
+                var response = await client.DeleteAsync($"categories/{id}");
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -132,7 +148,7 @@ namespace MiniSupermarket.WinForms
                 }
                 else
                 {
-                    MessageBox.Show("Xóa thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Xóa thất bại! Lỗi: " + response.StatusCode, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }
@@ -149,8 +165,8 @@ namespace MiniSupermarket.WinForms
 
             try
             {
-                // Gọi API dạng: GET /api/categories/search?keyword=abc
-                var result = await _client.GetFromJsonAsync<List<CategoryDto>>($"categories/search?keyword={keyword}");
+                using var client = GetAuthenticatedClient();
+                var result = await client.GetFromJsonAsync<List<CategoryDto>>($"categories/search?keyword={keyword}");
                 dgvCategories.DataSource = result;
             }
             catch (Exception)
@@ -166,8 +182,6 @@ namespace MiniSupermarket.WinForms
             txtCategoryName.Text = "";
             txtDescription.Text = "";
         }
-
-        
     }
 
     // Lớp DTO trung gian tại Client hứng dữ liệu JSON trả về từ Server

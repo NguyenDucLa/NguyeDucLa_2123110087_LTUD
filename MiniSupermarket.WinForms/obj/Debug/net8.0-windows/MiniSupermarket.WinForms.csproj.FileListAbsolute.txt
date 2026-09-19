@@ -68,3 +68,4 @@ D:\NguyenDucLa_LTUD\MiniSupermarket.WinForms\obj\Debug\net8.0-windows\refint\Min
 D:\NguyenDucLa_LTUD\MiniSupermarket.WinForms\obj\Debug\net8.0-windows\MiniSupermarket.WinForms.pdb
 D:\NguyenDucLa_LTUD\MiniSupermarket.WinForms\obj\Debug\net8.0-windows\MiniSupermarket.WinForms.genruntimeconfig.cache
 D:\NguyenDucLa_LTUD\MiniSupermarket.WinForms\obj\Debug\net8.0-windows\ref\MiniSupermarket.WinForms.dll
+D:\NguyenDucLa_LTUD\MiniSupermarket.WinForms\obj\Debug\net8.0-windows\MiniSupermarket.WinForms.FormLogin.resources

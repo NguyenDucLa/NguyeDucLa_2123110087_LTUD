@@ -1,4 +1,4 @@
-namespace MiniSupermarket.WinForms
+﻿namespace MiniSupermarket.WinForms
 {
     internal static class Program
     {
@@ -11,7 +11,9 @@ namespace MiniSupermarket.WinForms
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new FormCategoryManagement());
+
+            // Đổi FormLogin làm form khởi chạy mặc định khi bật chương trình WinForms
+            Application.Run(new FormLogin());
         }
     }
 }
