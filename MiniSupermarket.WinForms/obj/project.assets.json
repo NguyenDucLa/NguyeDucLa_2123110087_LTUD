@@ -256,23 +256,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Admin\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\nguye\\.nuget\\packages\\": {},
+    "D:\\visual studio 2022\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\NguenDucLa_2123110087_LTUD\\MiniSupermarket.WinForms\\MiniSupermarket.WinForms.csproj",
+      "projectUniqueName": "D:\\NguyenDucLa_LTUD\\MiniSupermarket.WinForms\\MiniSupermarket.WinForms.csproj",
       "projectName": "MiniSupermarket.WinForms",
-      "projectPath": "D:\\NguenDucLa_2123110087_LTUD\\MiniSupermarket.WinForms\\MiniSupermarket.WinForms.csproj",
-      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "D:\\NguenDucLa_2123110087_LTUD\\MiniSupermarket.WinForms\\obj\\",
+      "projectPath": "D:\\NguyenDucLa_LTUD\\MiniSupermarket.WinForms\\MiniSupermarket.WinForms.csproj",
+      "packagesPath": "C:\\Users\\nguye\\.nuget\\packages\\",
+      "outputPath": "D:\\NguyenDucLa_LTUD\\MiniSupermarket.WinForms\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "D:\\visual studio 2022\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\nguye\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -329,7 +329,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.315/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.318/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
