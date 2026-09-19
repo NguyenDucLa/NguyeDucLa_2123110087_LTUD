@@ -77,13 +77,8 @@ Buổi 02 tập trung vào việc cài đặt cơ chế **Xác thực (Authentic
 2. Nhấn `F5` hoặc `Ctrl + F5` để khởi chạy.
 3. Trang **Swagger UI** xuất hiện tại địa chỉ: `https://localhost:7075/swagger`.
 
-### 2. Dữ liệu tài khoản thử nghiệm
-| Username | Password | Role | Quyền hạn |
-| :--- | :--- | :--- | :--- |
-| **`admin`** | `123456` | `Admin` | Toàn quyền truy cập tất cả API & tính năng |
-| **`cashier`** | `123456` | `Cashier` | Truy cập màn hình POS, danh mục hàng hóa |
 
-### 3. Thử nghiệm trên WinForms
+### 2. Thử nghiệm trên WinForms
 1. Đảm bảo `MiniSupermarket.API` đang chạy.
 2. Mở giải pháp (Solution) và khởi chạy dự án `MiniSupermarket.WinForms`.
 3. Đăng nhập bằng tài khoản `admin` hoặc `cashier`.
