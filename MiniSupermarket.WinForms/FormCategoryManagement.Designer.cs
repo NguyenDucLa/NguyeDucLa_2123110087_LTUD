@@ -36,6 +36,7 @@
             btnAdd = new Button();
             btnUpdate = new Button();
             btnDelete = new Button();
+            btnCustomers = new Button();
 
             grpSearch.SuspendLayout();
             grpList.SuspendLayout();
@@ -185,9 +186,21 @@
             btnDelete.Click += btnDelete_Click;
 
             // 
+            // btnCustomers (Điều hướng sang Quản lý Khách hàng)
+            // 
+            btnCustomers.Location = new Point(12, 405);
+            btnCustomers.Name = "btnCustomers";
+            btnCustomers.Size = new Size(170, 32);
+            btnCustomers.TabIndex = 6;
+            btnCustomers.Text = "Quản lý Khách hàng";
+            btnCustomers.UseVisualStyleBackColor = true;
+            btnCustomers.Click += btnCustomers_Click;
+
+            // 
             // FormCategoryManagement
             // 
-            ClientSize = new Size(782, 408);
+            ClientSize = new Size(782, 450);
+            Controls.Add(btnCustomers);
             Controls.Add(btnDelete);
             Controls.Add(btnUpdate);
             Controls.Add(btnAdd);
@@ -231,5 +244,7 @@
         private Button btnAdd;
         private Button btnUpdate;
         private Button btnDelete;
+
+        private Button btnCustomers;
     }
 }

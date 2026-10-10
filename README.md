@@ -93,3 +93,44 @@ Buổi 02 tập trung vào việc cài đặt cơ chế **Xác thực (Authentic
 - [x] Lưu trữ Token vào Session và gửi đính kèm HTTP Request Header
 - [x] Hoàn thiện tài liệu README cho Buổi 02
 
+---
+
+# 🗄️ Buổi 03: Tích hợp SQL Server và Entity Framework Core Code-First
+
+Thay cơ chế lưu tạm **In-Memory** (Buổi 1 & 2) bằng CSDL **SQL Server**, truy cập qua **EF Core Code-First** với truy vấn bất đồng bộ `async/await` + `LINQ` → dữ liệu lưu **vĩnh viễn**.
+
+**Công nghệ:** EF Core 8.0 (`SqlServer`, `Tools`, `Design`) · SQL Server / LocalDB · WinForms + JWT (Buổi 2) · Swagger, SSMS.
+
+## 📚 Nội dung thực hành
+1. **Gói NuGet (Backend):** `Microsoft.EntityFrameworkCore.SqlServer`, `.Tools`, `.Design`.
+2. **Entities & DbContext:** `Category` (1-N với `Product`, `[JsonIgnore]`), `Product` (FK `CategoryId`), `Data/SupermarketDbContext.cs` (`DbSet<>` + **Data Seeding** trong `OnModelCreating`).
+3. **Chuỗi kết nối + DI:** khai báo trong `appsettings.json`, đăng ký trong `Program.cs`:
+   ```csharp
+   builder.Services.AddDbContext<SupermarketDbContext>(o => o.UseSqlServer(connectionString));
+   ```
+   ```json
+   "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=MiniSupermarketDb;Trusted_Connection=True;TrustServerCertificate=True"
+   ```
+   *(SQL Express → `Server=.\SQLEXPRESS`; tài khoản `sa` → `User Id=sa;Password=...`)*
+4. **Migrations:** `Add-Migration InitialCreateDatabase` → `Update-Database` (tự tạo CSDL + bảng **Categories**, **Products** + 5 dòng seed).
+5. **`CategoriesController`:** tiêm `SupermarketDbContext`, CRUD + search bất đồng bộ (`ToListAsync`, `FindAsync`, `SaveChangesAsync`), giữ `[Authorize]`.
+6. **WinForms:** `FormCategoryManagement` đọc/ghi trực tiếp xuống SQL Server; tắt/mở lại vẫn còn dữ liệu.
+
+## 🧩 Bài tập mở rộng: Quản lý Khách hàng (Customers)
+- **`Customer.cs`:** `CustomerId` (PK identity), `CustomerName` (nvarchar 100), `PhoneNumber` (varchar 15), `Address` (nullable), `RewardPoints` (=0), `MembershipRank` (="Chuẩn").
+- **DbContext:** thêm `DbSet<Customer>` + seed 3 khách hàng (Vàng/Bạc/Chuẩn) → `Add-Migration AddCustomersTable` + `Update-Database`.
+- **`CustomersController`:** `GET` all · `GET {id}` · `GET search?keyword=` (theo **tên hoặc SĐT**) · `POST` · `PUT {id}` · `DELETE {id}`.
+- **`FormCustomerManagement`:** `dgvCustomers` + ô `txtCustomerId/Name/Phone/Address/RewardPoints/MembershipRank` + nút `btnLoad/Add/Update/Delete/Search`; gọi API bằng `HttpClient` + JWT. Mở từ nút **"Quản lý Khách hàng"** ở `FormCategoryManagement`.
+
+## 🚀 Chạy & kiểm thử
+1. **API:** `Update-Database` → F5 → Swagger `https://localhost:7075/swagger` (Authorize bằng token từ `POST /api/auth/login`, `admin`/`123456`).
+2. **SSMS:** Server `(localdb)\MSSQLLocalDB`, Windows Authentication, **Encrypt = Optional** → xem `MiniSupermarketDb` (`Categories`, `Products`, `Customers`).
+3. **WinForms:** chạy client → đăng nhập → CRUD nhóm hàng & khách hàng → tắt/mở lại để kiểm chứng dữ liệu còn nguyên.
+
+## 📝 Đóng góp & Tiến độ (Buổi 03)
+- [x] Gói NuGet EF Core + Entities (`Category`, `Product`) + `SupermarketDbContext` (seed)
+- [x] Chuỗi kết nối + DI, Migrations tạo CSDL `MiniSupermarketDb`
+- [x] `CategoriesController` sang EF Core + `async/await`
+- [x] **Bài tập mở rộng:** `Customer`, `CustomersController`, `FormCustomerManagement`
+- [x] Kiểm chứng qua Swagger + SSMS + WinForms
+
