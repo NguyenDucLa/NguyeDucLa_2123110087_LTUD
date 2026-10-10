@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MiniSupermarket.API.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -11,27 +13,45 @@ namespace MiniSupermarket.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly SupermarketDbContext _context;
 
-        public AuthController(IConfiguration configuration)
+        public AuthController(IConfiguration configuration, SupermarketDbContext context)
         {
             _configuration = configuration;
+            _context = context;
         }
 
+        // Đăng nhập dựa trên bảng Users trong CSDL (15 tài khoản mẫu 3 vai trò)
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequestDto request)
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
         {
-            if (request.Username == "admin" && request.Password == "123456")
+            if (string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
             {
-                var token = GenerateJwtToken(request.Username, "Admin");
-                return Ok(new { success = true, token = token, role = "Admin" });
-            }
-            else if (request.Username == "cashier" && request.Password == "123456")
-            {
-                var token = GenerateJwtToken(request.Username, "Cashier");
-                return Ok(new { success = true, token = token, role = "Cashier" });
+                return BadRequest(new { success = false, message = "Vui lòng nhập tài khoản và mật khẩu!" });
             }
 
-            return Unauthorized(new { success = false, message = "Sai tài khoản hoặc mật khẩu!" });
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
+
+            if (user == null || user.Password != request.Password)
+            {
+                return Unauthorized(new { success = false, message = "Sai tài khoản hoặc mật khẩu!" });
+            }
+
+            if (!user.IsActive)
+            {
+                return Unauthorized(new { success = false, message = "Tài khoản đã bị khóa, vui lòng liên hệ Admin!" });
+            }
+
+            var token = GenerateJwtToken(user.Username, user.Role);
+
+            return Ok(new
+            {
+                success = true,
+                token = token,
+                role = user.Role,
+                username = user.Username,
+                fullName = user.FullName
+            });
         }
 
         private string GenerateJwtToken(string username, string role)

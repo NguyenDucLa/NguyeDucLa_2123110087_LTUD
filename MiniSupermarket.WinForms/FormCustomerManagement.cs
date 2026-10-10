@@ -11,6 +11,19 @@ namespace MiniSupermarket.WinForms
         public FormCustomerManagement()
         {
             InitializeComponent();
+            SetupGrid();
+        }
+
+        private void SetupGrid()
+        {
+            dgvCustomers.AutoGenerateColumns = false;
+            dgvCustomers.Columns.Clear();
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { Name = "CustomerId", DataPropertyName = "CustomerId", HeaderText = "Mã KH", Width = 60 });
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { Name = "CustomerName", DataPropertyName = "CustomerName", HeaderText = "Tên khách hàng", Width = 150 });
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { Name = "PhoneNumber", DataPropertyName = "PhoneNumber", HeaderText = "Số điện thoại", Width = 110 });
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { Name = "Address", DataPropertyName = "Address", HeaderText = "Địa chỉ giao hàng", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { Name = "RewardPoints", DataPropertyName = "RewardPoints", HeaderText = "Điểm", Width = 60 });
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { Name = "MembershipRank", DataPropertyName = "MembershipRank", HeaderText = "Hạng thẻ", Width = 80 });
         }
 
         // Hàm hỗ trợ tạo HttpClient và đính kèm JWT Bearer Token tự động
@@ -59,15 +72,14 @@ namespace MiniSupermarket.WinForms
         // Click một dòng trên bảng -> đưa dữ liệu lên các ô nhập
         private void dgvCustomers_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex >= 0 && dgvCustomers.Rows[e.RowIndex].DataBoundItem is CustomerDto c)
             {
-                DataGridViewRow row = dgvCustomers.Rows[e.RowIndex];
-                txtCustomerId.Text = row.Cells["CustomerId"].Value?.ToString() ?? string.Empty;
-                txtCustomerName.Text = row.Cells["CustomerName"].Value?.ToString() ?? string.Empty;
-                txtPhoneNumber.Text = row.Cells["PhoneNumber"].Value?.ToString() ?? string.Empty;
-                txtAddress.Text = row.Cells["Address"]?.Value?.ToString() ?? string.Empty;
-                txtRewardPoints.Text = row.Cells["RewardPoints"].Value?.ToString() ?? string.Empty;
-                txtMembershipRank.Text = row.Cells["MembershipRank"].Value?.ToString() ?? string.Empty;
+                txtCustomerId.Text = c.CustomerId.ToString();
+                txtCustomerName.Text = c.CustomerName;
+                txtPhoneNumber.Text = c.PhoneNumber;
+                txtAddress.Text = c.Address ?? string.Empty;
+                txtRewardPoints.Text = c.RewardPoints.ToString();
+                txtMembershipRank.Text = c.MembershipRank;
             }
         }
 

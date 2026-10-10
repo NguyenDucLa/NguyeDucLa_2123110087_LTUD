@@ -70,3 +70,8 @@ D:\NguyenDucLa_LTUD\MiniSupermarket.WinForms\obj\Debug\net8.0-windows\MiniSuperm
 D:\NguyenDucLa_LTUD\MiniSupermarket.WinForms\obj\Debug\net8.0-windows\ref\MiniSupermarket.WinForms.dll
 D:\NguyenDucLa_LTUD\MiniSupermarket.WinForms\obj\Debug\net8.0-windows\MiniSupermarket.WinForms.FormLogin.resources
 d:\NguyenDucLa_LTUD\MiniSupermarket.WinForms\obj\Debug\net8.0-windows\MiniSupermarket.WinForms.FormCustomerManagement.resources
+d:\NguyenDucLa_LTUD\MiniSupermarket.WinForms\obj\Debug\net8.0-windows\MiniSupermarket.WinForms.FormMainShell.resources
+d:\NguyenDucLa_LTUD\MiniSupermarket.WinForms\obj\Debug\net8.0-windows\MiniSupermarket.WinForms.FormPOS.resources
+d:\NguyenDucLa_LTUD\MiniSupermarket.WinForms\obj\Debug\net8.0-windows\MiniSupermarket.WinForms.FormProductManagement.resources
+d:\NguyenDucLa_LTUD\MiniSupermarket.WinForms\obj\Debug\net8.0-windows\MiniSupermarket.WinForms.FormQuickReport.resources
+d:\NguyenDucLa_LTUD\MiniSupermarket.WinForms\obj\Debug\net8.0-windows\MiniSupermarket.WinForms.FormUserManagement.resources

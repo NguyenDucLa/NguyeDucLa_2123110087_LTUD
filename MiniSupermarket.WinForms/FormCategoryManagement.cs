@@ -182,13 +182,6 @@ namespace MiniSupermarket.WinForms
             txtCategoryName.Text = "";
             txtDescription.Text = "";
         }
-
-        // Mở màn hình Quản lý Khách hàng (bài tập mở rộng Buổi 3)
-        private void btnCustomers_Click(object sender, EventArgs e)
-        {
-            using var frm = new FormCustomerManagement();
-            frm.ShowDialog();
-        }
     }
 
     // Lớp DTO trung gian tại Client hứng dữ liệu JSON trả về từ Server

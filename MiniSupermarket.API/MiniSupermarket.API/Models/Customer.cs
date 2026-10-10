@@ -19,7 +19,8 @@ namespace MiniSupermarket.API.Models
         [Column(TypeName = "varchar(15)")]
         public string PhoneNumber { get; set; } = string.Empty;
 
-        [StringLength(200)]
+        // Địa chỉ giao hàng đầy đủ (số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố)
+        [StringLength(255)]
         public string? Address { get; set; }
 
         public int RewardPoints { get; set; } = 0; // Điểm tích lũy, mặc định 0

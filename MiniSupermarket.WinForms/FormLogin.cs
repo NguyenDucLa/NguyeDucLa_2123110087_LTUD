@@ -39,12 +39,15 @@ namespace MiniSupermarket.WinForms
 
                     SessionManager.JwtToken = doc.RootElement.GetProperty("token").GetString() ?? string.Empty;
                     SessionManager.CurrentRole = doc.RootElement.GetProperty("role").GetString() ?? string.Empty;
+                    SessionManager.CurrentUsername = doc.RootElement.TryGetProperty("username", out var un) ? (un.GetString() ?? username) : username;
+                    SessionManager.CurrentFullName = doc.RootElement.TryGetProperty("fullName", out var fn) ? (fn.GetString() ?? username) : username;
 
-                    MessageBox.Show($"Đăng nhập thành công với quyền: {SessionManager.CurrentRole}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Đăng nhập thành công: {SessionManager.CurrentFullName} - Quyền [{SessionManager.CurrentRole}]", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    FormCategoryManagement mainForm = new FormCategoryManagement();
+                    // Mở màn hình Shell trung tâm (Buổi 4) sau khi đăng nhập
+                    var shell = new FormMainShell();
                     this.Hide();
-                    mainForm.ShowDialog();
+                    shell.ShowDialog();
                     this.Close();
                 }
                 else
