@@ -48,6 +48,7 @@ namespace MiniSupermarket.WinForms
             pnlLeft.Controls.Add(lblHint);
             pnlLeft.Controls.Add(txtBarcode);
             pnlLeft.Controls.Add(lblBarcode);
+            pnlLeft.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlLeft.Location = new Point(10, 10);
             pnlLeft.Name = "pnlLeft";
             pnlLeft.Size = new Size(780, 650);
@@ -62,6 +63,7 @@ namespace MiniSupermarket.WinForms
             lblBarcode.Text = "Mã vạch:";
 
             // txtBarcode
+            txtBarcode.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtBarcode.Font = new Font("Segoe UI", 11F);
             txtBarcode.Location = new Point(90, 10);
             txtBarcode.Name = "txtBarcode";
@@ -80,6 +82,7 @@ namespace MiniSupermarket.WinForms
 
             // dgvCart
             dgvCart.AllowUserToAddRows = false;
+            dgvCart.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvCart.BackgroundColor = Color.White;
             dgvCart.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvCart.Location = new Point(10, 55);
@@ -103,6 +106,7 @@ namespace MiniSupermarket.WinForms
             pnlRight.Controls.Add(lblCustomerName);
             pnlRight.Controls.Add(txtCustomerPhone);
             pnlRight.Controls.Add(lblCustomerPhone);
+            pnlRight.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             pnlRight.Location = new Point(800, 10);
             pnlRight.Name = "pnlRight";
             pnlRight.Size = new Size(400, 650);
@@ -117,6 +121,7 @@ namespace MiniSupermarket.WinForms
             lblCustomerPhone.Text = "SĐT Khách hàng thân thiết:";
 
             // txtCustomerPhone
+            txtCustomerPhone.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtCustomerPhone.Font = new Font("Segoe UI", 10F);
             txtCustomerPhone.Location = new Point(15, 38);
             txtCustomerPhone.Name = "txtCustomerPhone";
@@ -125,6 +130,7 @@ namespace MiniSupermarket.WinForms
             txtCustomerPhone.TabIndex = 0;
 
             // lblCustomerName
+            lblCustomerName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblCustomerName.Font = new Font("Segoe UI", 10F, FontStyle.Italic);
             lblCustomerName.ForeColor = Color.FromArgb(41, 100, 180);
             lblCustomerName.Location = new Point(15, 72);
@@ -141,6 +147,7 @@ namespace MiniSupermarket.WinForms
             lblTotalCaption.Text = "TỔNG TIỀN:";
 
             // lblTotalAmount
+            lblTotalAmount.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblTotalAmount.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
             lblTotalAmount.ForeColor = Color.FromArgb(200, 30, 30);
             lblTotalAmount.Location = new Point(15, 155);
@@ -156,6 +163,7 @@ namespace MiniSupermarket.WinForms
             lblCashCaption.Text = "Tiền khách đưa:";
 
             // txtCashReceived
+            txtCashReceived.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtCashReceived.Font = new Font("Segoe UI", 11F);
             txtCashReceived.Location = new Point(15, 248);
             txtCashReceived.Name = "txtCashReceived";
@@ -171,6 +179,7 @@ namespace MiniSupermarket.WinForms
             lblChangeCaption.Text = "Tiền thừa trả khách:";
 
             // lblChange
+            lblChange.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblChange.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblChange.Location = new Point(15, 312);
             lblChange.Name = "lblChange";
@@ -178,6 +187,7 @@ namespace MiniSupermarket.WinForms
             lblChange.Text = "0 đ";
 
             // btnCheckout
+            btnCheckout.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnCheckout.BackColor = Color.FromArgb(34, 139, 34);
             btnCheckout.FlatAppearance.BorderSize = 0;
             btnCheckout.FlatStyle = FlatStyle.Flat;
@@ -192,6 +202,7 @@ namespace MiniSupermarket.WinForms
             btnCheckout.Click += btnCheckout_Click;
 
             // btnClearCart
+            btnClearCart.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnClearCart.BackColor = Color.FromArgb(200, 40, 40);
             btnClearCart.FlatAppearance.BorderSize = 0;
             btnClearCart.FlatStyle = FlatStyle.Flat;

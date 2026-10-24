@@ -134,3 +134,53 @@ Thay cơ chế lưu tạm **In-Memory** (Buổi 1 & 2) bằng CSDL **SQL Server*
 - [x] **Bài tập mở rộng:** `Customer`, `CustomersController`, `FormCustomerManagement`
 - [x] Kiểm chứng qua Swagger + SSMS + WinForms
 
+---
+
+# 🖥️ Buổi 04: Kiến trúc giao diện WinForms Shell & Điều hướng phân quyền (Admin / Cashier / Warehouse)
+
+Xây dựng **một khung giao diện duy nhất (Single-Form Architecture)**: thanh điều hướng bên trái (`panelSidebar`) + vùng làm việc (`panelMainContent`), **nhúng động** các form nghiệp vụ vào vùng nội dung và **phân quyền giao diện (RBAC)** theo 3 vai trò.
+
+## 🎯 Mục tiêu
+- Thiết kế khung **Sidebar + Top Header + Main Content**.
+- Nhúng form con bằng `TopLevel = false`, `FormBorderStyle = None`, `Dock = Fill` (không mở cửa sổ rời rạc).
+- Ẩn/hiện nút chức năng theo vai trò và chặn logic **2 lớp**.
+- Giao diện **co giãn** theo cửa sổ (`Anchor`/`Dock`), không bị che khi kéo nhỏ/phóng to.
+
+## 🧱 Kiến trúc khung
+```text
+FormMainShell
+├── panelSidebar      (Dock = Left, 230px)  ← Logo + 6 nút chức năng + Đăng xuất
+├── panelTopHeader    (Dock = Top, 60px)    ← lblTitle + lblUserInfo
+└── panelMainContent  (Dock = Fill)         ← nhúng động Form con
+```
+
+## 📚 Nội dung thực hành
+1. **FormMainShell:** sidebar tối màu `(24,30,48)`, nút `Flat` + `TextAlign=MiddleLeft`; header trắng; vùng nội dung `(244,245,247)`.
+2. **Nạp form động:** `OpenChildForm()` đóng form cũ → `TopLevel=false`, `Dock=Fill` → `panelMainContent.Controls.Add()` → đồng bộ `lblTitle`; `HighlightActiveButton()` tô màu nút đang chọn.
+3. **RBAC:** `ApplyRolePermissions()` bật/tắt nút theo vai trò; `OpenDefaultScreenByRole()` mở màn hình mặc định.
+4. **Tài khoản mẫu (15):** `admin01/02`, `admin_backup`, `supervisor` = **Admin**; `cashier01–06` = **Cashier**; `ware01–05` = **Warehouse** (mật khẩu `123456`). Đăng nhập kiểm tra bảng `Users` trong CSDL.
+5. **Form con:** `FormPOS`, `FormProductManagement`, `FormUserManagement`, `FormQuickReport` + tái sử dụng `FormCategoryManagement`, `FormCustomerManagement`.
+
+## 🔐 Phân quyền
+| Vai trò | Nút hiển thị | Màn hình mặc định |
+|---|---|---|
+| **Admin** | Tất cả 6 nút | Danh mục |
+| **Cashier** | POS, Khách hàng | POS |
+| **Warehouse** | Danh mục, Sản phẩm | Danh mục |
+
+## 🧩 Bài tập mở rộng
+- **FormQuickReport:** `DateTimePicker` + `btnRunReport` + 3 thẻ tóm tắt `lblTotalOrders`, `lblTotalRevenue`, `lblBestSeller` (gọi API `reports/quick`).
+- **Bảo vệ 2 lớp:** vừa ẩn nút ở Sidebar, vừa kiểm tra `if (SessionManager.CurrentRole != "Admin") return;` trong `btnReports_Click`.
+
+## 🛠️ Kỹ thuật giao diện responsive
+- Panel/lưới dùng `Anchor` (`Top|Bottom|Left|Right`), panel chi tiết dính `Right`, nút chức năng dính `Bottom` → co giãn theo cửa sổ, không bị che.
+- Vùng nội dung luôn `Dock = Fill` trong `panelMainContent`.
+
+## 📝 Đóng góp & Tiến độ (Buổi 04)
+- [x] FormMainShell (Sidebar + Header + Main Content) & nhúng form động
+- [x] RBAC Admin/Cashier/Warehouse + highlight nút + đồng bộ tiêu đề
+- [x] 15 tài khoản mẫu, đăng nhập theo bảng `Users`
+- [x] Các form con: POS, Sản phẩm, Khách hàng, Danh mục, Tài khoản, Báo cáo
+- [x] **Bài tập mở rộng:** FormQuickReport + phân quyền 2 lớp
+- [x] Giao diện co giãn (Anchor/Dock), không bị che khi thay đổi kích thước
+

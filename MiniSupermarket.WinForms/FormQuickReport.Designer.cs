@@ -144,6 +144,7 @@ namespace MiniSupermarket.WinForms
             // 
             // FormQuickReport
             // 
+            AutoScroll = true;
             ClientSize = new Size(910, 260);
             Controls.Add(pnlBest);
             Controls.Add(pnlRevenue);

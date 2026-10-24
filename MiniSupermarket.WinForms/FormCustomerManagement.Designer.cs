@@ -52,36 +52,40 @@ namespace MiniSupermarket.WinForms
             // 
             // grpSearch (Khung Tìm kiếm)
             // 
+            grpSearch.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             grpSearch.Controls.Add(txtKeyword);
             grpSearch.Controls.Add(btnSearch);
             grpSearch.Controls.Add(btnLoad);
             grpSearch.Location = new Point(12, 12);
             grpSearch.Name = "grpSearch";
-            grpSearch.Size = new Size(600, 60);
+            grpSearch.Size = new Size(786, 60);
             grpSearch.TabIndex = 0;
             grpSearch.TabStop = false;
             grpSearch.Text = "Tìm kiếm (theo Tên hoặc Số điện thoại)";
 
             // txtKeyword
+            txtKeyword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtKeyword.Location = new Point(12, 22);
             txtKeyword.Name = "txtKeyword";
             txtKeyword.PlaceholderText = "Nhập tên hoặc SĐT...";
-            txtKeyword.Size = new Size(350, 27);
+            txtKeyword.Size = new Size(500, 27);
             txtKeyword.TabIndex = 0;
 
             // btnSearch
-            btnSearch.Location = new Point(370, 20);
+            btnSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSearch.Location = new Point(536, 21);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(105, 30);
+            btnSearch.Size = new Size(115, 30);
             btnSearch.TabIndex = 1;
             btnSearch.Text = "Tìm kiếm";
             btnSearch.UseVisualStyleBackColor = true;
             btnSearch.Click += btnSearch_Click;
 
             // btnLoad
-            btnLoad.Location = new Point(483, 20);
+            btnLoad.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnLoad.Location = new Point(659, 21);
             btnLoad.Name = "btnLoad";
-            btnLoad.Size = new Size(105, 30);
+            btnLoad.Size = new Size(115, 30);
             btnLoad.TabIndex = 2;
             btnLoad.Text = "Tải lại";
             btnLoad.UseVisualStyleBackColor = true;
@@ -90,10 +94,11 @@ namespace MiniSupermarket.WinForms
             // 
             // grpList (Khung Danh sách Khách hàng)
             // 
+            grpList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             grpList.Controls.Add(dgvCustomers);
-            grpList.Location = new Point(12, 78);
+            grpList.Location = new Point(12, 80);
             grpList.Name = "grpList";
-            grpList.Size = new Size(600, 434);
+            grpList.Size = new Size(786, 588);
             grpList.TabIndex = 1;
             grpList.TabStop = false;
             grpList.Text = "Danh sách Khách hàng";
@@ -105,7 +110,7 @@ namespace MiniSupermarket.WinForms
             dgvCustomers.Location = new Point(3, 23);
             dgvCustomers.Name = "dgvCustomers";
             dgvCustomers.RowHeadersWidth = 30;
-            dgvCustomers.Size = new Size(594, 408);
+            dgvCustomers.Size = new Size(780, 562);
             dgvCustomers.TabIndex = 0;
             dgvCustomers.CellClick += dgvCustomers_CellClick;
 
@@ -124,9 +129,13 @@ namespace MiniSupermarket.WinForms
             grpInfo.Controls.Add(txtRewardPoints);
             grpInfo.Controls.Add(lblRank);
             grpInfo.Controls.Add(txtMembershipRank);
-            grpInfo.Location = new Point(620, 12);
+            grpInfo.Controls.Add(btnDelete);
+            grpInfo.Controls.Add(btnUpdate);
+            grpInfo.Controls.Add(btnAdd);
+            grpInfo.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            grpInfo.Location = new Point(808, 12);
             grpInfo.Name = "grpInfo";
-            grpInfo.Size = new Size(340, 500);
+            grpInfo.Size = new Size(330, 656);
             grpInfo.TabIndex = 2;
             grpInfo.TabStop = false;
             grpInfo.Text = "Thông tin Khách hàng";
@@ -138,10 +147,11 @@ namespace MiniSupermarket.WinForms
             lblId.Size = new Size(120, 20);
             lblId.Text = "Mã khách hàng";
 
+            txtCustomerId.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtCustomerId.Location = new Point(10, 50);
             txtCustomerId.Name = "txtCustomerId";
             txtCustomerId.ReadOnly = true;
-            txtCustomerId.Size = new Size(320, 27);
+            txtCustomerId.Size = new Size(310, 27);
             txtCustomerId.TabIndex = 1;
 
             // lblName & txtCustomerName
@@ -151,9 +161,10 @@ namespace MiniSupermarket.WinForms
             lblName.Size = new Size(120, 20);
             lblName.Text = "Tên khách hàng";
 
+            txtCustomerName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtCustomerName.Location = new Point(10, 107);
             txtCustomerName.Name = "txtCustomerName";
-            txtCustomerName.Size = new Size(320, 27);
+            txtCustomerName.Size = new Size(310, 27);
             txtCustomerName.TabIndex = 3;
 
             // lblPhone & txtPhoneNumber
@@ -163,9 +174,10 @@ namespace MiniSupermarket.WinForms
             lblPhone.Size = new Size(120, 20);
             lblPhone.Text = "Số điện thoại";
 
+            txtPhoneNumber.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtPhoneNumber.Location = new Point(10, 164);
             txtPhoneNumber.Name = "txtPhoneNumber";
-            txtPhoneNumber.Size = new Size(320, 27);
+            txtPhoneNumber.Size = new Size(310, 27);
             txtPhoneNumber.TabIndex = 5;
 
             // lblAddress & txtAddress
@@ -175,56 +187,60 @@ namespace MiniSupermarket.WinForms
             lblAddress.Size = new Size(130, 20);
             lblAddress.Text = "Địa chỉ giao hàng";
 
+            txtAddress.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtAddress.Location = new Point(10, 212);
             txtAddress.Multiline = true;
             txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(320, 90);
+            txtAddress.Size = new Size(310, 150);
             txtAddress.TabIndex = 7;
 
             // lblPoints & txtRewardPoints
             lblPoints.AutoSize = true;
-            lblPoints.Location = new Point(10, 320);
+            lblPoints.Location = new Point(10, 380);
             lblPoints.Name = "lblPoints";
             lblPoints.Size = new Size(110, 20);
             lblPoints.Text = "Điểm tích lũy";
-            txtRewardPoints.Location = new Point(10, 340);
+            txtRewardPoints.Location = new Point(10, 400);
             txtRewardPoints.Name = "txtRewardPoints";
             txtRewardPoints.Size = new Size(140, 27);
             txtRewardPoints.TabIndex = 8;
 
             // lblRank & txtMembershipRank
             lblRank.AutoSize = true;
-            lblRank.Location = new Point(160, 320);
+            lblRank.Location = new Point(160, 380);
             lblRank.Name = "lblRank";
             lblRank.Size = new Size(110, 20);
             lblRank.Text = "Hạng thẻ";
-            txtMembershipRank.Location = new Point(160, 340);
+            txtMembershipRank.Location = new Point(160, 400);
             txtMembershipRank.Name = "txtMembershipRank";
-            txtMembershipRank.Size = new Size(170, 27);
+            txtMembershipRank.Size = new Size(160, 27);
             txtMembershipRank.TabIndex = 9;
 
             // 
             // Nút Thêm mới, Cập nhật, Xóa
             // 
-            btnAdd.Location = new Point(10, 400);
+            btnAdd.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnAdd.Location = new Point(10, 612);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(102, 34);
+            btnAdd.Size = new Size(100, 34);
             btnAdd.TabIndex = 3;
             btnAdd.Text = "Thêm mới";
             btnAdd.UseVisualStyleBackColor = true;
             btnAdd.Click += btnAdd_Click;
 
-            btnUpdate.Location = new Point(118, 400);
+            btnUpdate.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnUpdate.Location = new Point(114, 612);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(102, 34);
+            btnUpdate.Size = new Size(100, 34);
             btnUpdate.TabIndex = 4;
             btnUpdate.Text = "Cập nhật";
             btnUpdate.UseVisualStyleBackColor = true;
             btnUpdate.Click += btnUpdate_Click;
 
-            btnDelete.Location = new Point(226, 400);
+            btnDelete.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnDelete.Location = new Point(218, 612);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(104, 34);
+            btnDelete.Size = new Size(100, 34);
             btnDelete.TabIndex = 5;
             btnDelete.Text = "Xóa";
             btnDelete.UseVisualStyleBackColor = true;
@@ -233,10 +249,7 @@ namespace MiniSupermarket.WinForms
             // 
             // FormCustomerManagement
             // 
-            ClientSize = new Size(972, 524);
-            Controls.Add(btnDelete);
-            Controls.Add(btnUpdate);
-            Controls.Add(btnAdd);
+            ClientSize = new Size(1150, 680);
             Controls.Add(grpInfo);
             Controls.Add(grpList);
             Controls.Add(grpSearch);

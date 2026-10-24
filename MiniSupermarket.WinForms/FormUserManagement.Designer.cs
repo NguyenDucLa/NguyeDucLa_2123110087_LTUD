@@ -41,6 +41,7 @@ namespace MiniSupermarket.WinForms
             dgvUsers.AllowUserToAddRows = false;
             dgvUsers.BackgroundColor = Color.White;
             dgvUsers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvUsers.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvUsers.Location = new Point(10, 10);
             dgvUsers.Name = "dgvUsers";
             dgvUsers.RowHeadersWidth = 30;
@@ -63,6 +64,7 @@ namespace MiniSupermarket.WinForms
             grpInfo.Controls.Add(lblFullName);
             grpInfo.Controls.Add(txtUsername);
             grpInfo.Controls.Add(lblUsername);
+            grpInfo.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             grpInfo.Location = new Point(720, 10);
             grpInfo.Name = "grpInfo";
             grpInfo.Size = new Size(310, 505);
@@ -74,6 +76,7 @@ namespace MiniSupermarket.WinForms
             lblUsername.Name = "lblUsername";
             lblUsername.Size = new Size(90, 15);
             lblUsername.Text = "Tên đăng nhập";
+            txtUsername.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtUsername.Location = new Point(15, 40);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(280, 23);
@@ -85,6 +88,7 @@ namespace MiniSupermarket.WinForms
             lblFullName.Name = "lblFullName";
             lblFullName.Size = new Size(65, 15);
             lblFullName.Text = "Họ và tên";
+            txtFullName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtFullName.Location = new Point(15, 100);
             txtFullName.Name = "txtFullName";
             txtFullName.Size = new Size(280, 23);
@@ -96,6 +100,7 @@ namespace MiniSupermarket.WinForms
             lblPassword.Name = "lblPassword";
             lblPassword.Size = new Size(57, 15);
             lblPassword.Text = "Mật khẩu";
+            txtPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtPassword.Location = new Point(15, 160);
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(280, 23);
@@ -107,6 +112,7 @@ namespace MiniSupermarket.WinForms
             lblRole.Name = "lblRole";
             lblRole.Size = new Size(45, 15);
             lblRole.Text = "Vai trò";
+            cboRole.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             cboRole.DropDownStyle = ComboBoxStyle.DropDownList;
             cboRole.Location = new Point(15, 220);
             cboRole.Name = "cboRole";
@@ -114,6 +120,7 @@ namespace MiniSupermarket.WinForms
             cboRole.TabIndex = 3;
 
             // btnAddUser
+            btnAddUser.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnAddUser.Location = new Point(15, 270);
             btnAddUser.Name = "btnAddUser";
             btnAddUser.Size = new Size(280, 40);
@@ -123,6 +130,7 @@ namespace MiniSupermarket.WinForms
             btnAddUser.Click += btnAddUser_Click;
 
             // btnResetPassword
+            btnResetPassword.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnResetPassword.Location = new Point(15, 320);
             btnResetPassword.Name = "btnResetPassword";
             btnResetPassword.Size = new Size(280, 40);
@@ -132,6 +140,7 @@ namespace MiniSupermarket.WinForms
             btnResetPassword.Click += btnResetPassword_Click;
 
             // btnToggleLock
+            btnToggleLock.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnToggleLock.Location = new Point(15, 370);
             btnToggleLock.Name = "btnToggleLock";
             btnToggleLock.Size = new Size(280, 40);

@@ -52,6 +52,7 @@ namespace MiniSupermarket.WinForms
             // 
             // pnlTop (Thanh tìm kiếm & lọc)
             // 
+            pnlTop.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlTop.BackColor = Color.White;
             pnlTop.Controls.Add(btnSearch);
             pnlTop.Controls.Add(cboFilterCategory);
@@ -60,7 +61,7 @@ namespace MiniSupermarket.WinForms
             pnlTop.Controls.Add(lblSearch);
             pnlTop.Location = new Point(10, 10);
             pnlTop.Name = "pnlTop";
-            pnlTop.Size = new Size(1060, 55);
+            pnlTop.Size = new Size(1180, 55);
             pnlTop.TabIndex = 0;
 
             // lblSearch
@@ -92,7 +93,8 @@ namespace MiniSupermarket.WinForms
             cboFilterCategory.TabIndex = 1;
 
             // btnSearch
-            btnSearch.Location = new Point(860, 12);
+            btnSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSearch.Location = new Point(985, 12);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(185, 30);
             btnSearch.TabIndex = 2;
@@ -109,7 +111,8 @@ namespace MiniSupermarket.WinForms
             dgvProducts.Location = new Point(10, 75);
             dgvProducts.Name = "dgvProducts";
             dgvProducts.RowHeadersWidth = 30;
-            dgvProducts.Size = new Size(760, 530);
+            dgvProducts.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvProducts.Size = new Size(880, 613);
             dgvProducts.TabIndex = 1;
             dgvProducts.CellClick += dgvProducts_CellClick;
 
@@ -133,9 +136,10 @@ namespace MiniSupermarket.WinForms
             grpInfo.Controls.Add(lblBarcode);
             grpInfo.Controls.Add(txtId);
             grpInfo.Controls.Add(lblId);
-            grpInfo.Location = new Point(780, 75);
+            grpInfo.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            grpInfo.Location = new Point(900, 75);
             grpInfo.Name = "grpInfo";
-            grpInfo.Size = new Size(290, 530);
+            grpInfo.Size = new Size(290, 613);
             grpInfo.TabIndex = 2;
 
             // lblId & txtId
@@ -144,6 +148,7 @@ namespace MiniSupermarket.WinForms
             lblId.Name = "lblId";
             lblId.Size = new Size(70, 15);
             lblId.Text = "Mã sản phẩm";
+            txtId.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtId.Location = new Point(12, 33);
             txtId.Name = "txtId";
             txtId.ReadOnly = true;
@@ -156,6 +161,7 @@ namespace MiniSupermarket.WinForms
             lblBarcode.Name = "lblBarcode";
             lblBarcode.Size = new Size(55, 15);
             lblBarcode.Text = "Mã vạch";
+            txtBarcode.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtBarcode.Location = new Point(12, 86);
             txtBarcode.Name = "txtBarcode";
             txtBarcode.Size = new Size(265, 23);
@@ -167,6 +173,7 @@ namespace MiniSupermarket.WinForms
             lblName.Name = "lblName";
             lblName.Size = new Size(80, 15);
             lblName.Text = "Tên sản phẩm";
+            txtProductName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtProductName.Location = new Point(12, 139);
             txtProductName.Name = "txtProductName";
             txtProductName.Size = new Size(265, 23);
@@ -178,6 +185,7 @@ namespace MiniSupermarket.WinForms
             lblPrice.Name = "lblPrice";
             lblPrice.Size = new Size(50, 15);
             lblPrice.Text = "Đơn giá";
+            nudPrice.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             nudPrice.Location = new Point(12, 192);
             nudPrice.Maximum = new decimal(new int[] { 1000000000, 0, 0, 0 });
             nudPrice.Name = "nudPrice";
@@ -191,6 +199,7 @@ namespace MiniSupermarket.WinForms
             lblStock.Name = "lblStock";
             lblStock.Size = new Size(55, 15);
             lblStock.Text = "Tồn kho";
+            nudStock.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             nudStock.Location = new Point(12, 245);
             nudStock.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             nudStock.Name = "nudStock";
@@ -203,6 +212,7 @@ namespace MiniSupermarket.WinForms
             lblCategory.Name = "lblCategory";
             lblCategory.Size = new Size(65, 15);
             lblCategory.Text = "Nhóm hàng";
+            cboCategory.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             cboCategory.DropDownStyle = ComboBoxStyle.DropDownList;
             cboCategory.Location = new Point(12, 298);
             cboCategory.Name = "cboCategory";
@@ -210,7 +220,8 @@ namespace MiniSupermarket.WinForms
             cboCategory.TabIndex = 5;
 
             // btnLoad
-            btnLoad.Location = new Point(12, 345);
+            btnLoad.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnLoad.Location = new Point(12, 505);
             btnLoad.Name = "btnLoad";
             btnLoad.Size = new Size(128, 32);
             btnLoad.TabIndex = 6;
@@ -219,7 +230,8 @@ namespace MiniSupermarket.WinForms
             btnLoad.Click += btnLoad_Click;
 
             // btnAdd
-            btnAdd.Location = new Point(149, 345);
+            btnAdd.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnAdd.Location = new Point(149, 505);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(128, 32);
             btnAdd.TabIndex = 7;
@@ -228,7 +240,8 @@ namespace MiniSupermarket.WinForms
             btnAdd.Click += btnAdd_Click;
 
             // btnUpdate
-            btnUpdate.Location = new Point(12, 385);
+            btnUpdate.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnUpdate.Location = new Point(12, 545);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(128, 32);
             btnUpdate.TabIndex = 8;
@@ -237,7 +250,8 @@ namespace MiniSupermarket.WinForms
             btnUpdate.Click += btnUpdate_Click;
 
             // btnDelete
-            btnDelete.Location = new Point(149, 385);
+            btnDelete.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnDelete.Location = new Point(149, 545);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(128, 32);
             btnDelete.TabIndex = 9;
@@ -248,7 +262,7 @@ namespace MiniSupermarket.WinForms
             // 
             // FormProductManagement
             // 
-            ClientSize = new Size(1080, 620);
+            ClientSize = new Size(1200, 700);
             Controls.Add(grpInfo);
             Controls.Add(dgvProducts);
             Controls.Add(pnlTop);
