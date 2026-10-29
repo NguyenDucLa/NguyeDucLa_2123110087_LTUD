@@ -184,3 +184,34 @@ FormMainShell
 - [x] **Bài tập mở rộng:** FormQuickReport + phân quyền 2 lớp
 - [x] Giao diện co giãn (Anchor/Dock), không bị che khi thay đổi kích thước
 
+---
+
+# 🗄️ Buổi 05: ADO.NET nâng cao, Stored Procedure & Giao dịch POS Checkout
+
+Truy cập CSDL bằng **ADO.NET thuần** (không qua EF Core) và bảo vệ nghiệp vụ bán hàng bằng **SqlTransaction** theo chuẩn **ACID**.
+
+## 📚 Nội dung chính
+1. **ADO.NET cơ bản:** `SqlConnection` → `SqlCommand` (tham số hóa `SqlParameter`, chống SQL Injection) → `SqlDataReader` (Connected) hoặc `DataTable` + `SqlDataAdapter` (Disconnected). Phân biệt `ExecuteScalar()` / `ExecuteNonQuery()` / `ExecuteReader()`.
+2. **API tra mã vạch siêu tốc:** `AdoProductController` đọc trực tiếp bằng `SqlDataReader`, tải danh sách bằng `DataTable`.
+3. **Stored Procedure:** `sp_GetRevenueByCashier` (GROUP BY + SUM) → API báo cáo doanh thu theo thu ngân.
+4. **ACID & SqlTransaction:** `BeginTransaction()` → `Commit()` / `Rollback()`; mọi `SqlCommand` phải gán `command.Transaction`.
+5. **POS Checkout đa bảng:** `Orders` → `OrderDetails` → trừ tồn kho `Products` → tích điểm `Customers`, tất cả trong **một transaction**.
+
+## 🔌 Endpoint mới
+| Method | Route | Kỹ thuật |
+|---|---|---|
+| `GET` | `/api/ado-products/barcode/{barcode}` | `SqlDataReader` (404 nếu không có) |
+| `GET` | `/api/ado-products/disconnected-cache` | `DataTable` + `SqlDataAdapter` |
+| `GET` | `/api/reports/revenue-by-cashier` | `CommandType.StoredProcedure` |
+| `POST` | `/api/checkout` | `SqlTransaction` (commit/rollback) |
+| `DELETE` | `/api/checkout/cancel/{id}` | Transaction hoàn kho + trừ điểm |
+
+> **Ghi chú:** Script tạo SP nằm ở `Database/sp_GetRevenueByCashier.sql`. Tên cột thực tế của bảng `Orders` là `OrderDate`, `TotalAmount` (khác tài liệu gốc), nên mã ADO.NET đã được viết khớp CSDL.
+
+## 📝 Đóng góp & Tiến độ (Buổi 05)
+- [x] ADO.NET thuần + tham số hóa chống SQL Injection
+- [x] `AdoProductController` (tra mã vạch, DataTable cache, lọc tồn kho)
+- [x] Stored Procedure `sp_GetRevenueByCashier` + API báo cáo doanh thu
+- [x] `CheckoutController` bọc `SqlTransaction` + hủy đơn hoàn kho
+- [x] Kiểm chứng: checkout commit, rollback khi thiếu kho, hủy đơn khôi phục tồn kho
+

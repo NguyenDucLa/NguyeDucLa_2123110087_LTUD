@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MiniSupermarket.API.Data;
 using MiniSupermarket.API.Models;
+using System.Data;
 
 namespace MiniSupermarket.API.Controllers
 {
@@ -12,10 +14,12 @@ namespace MiniSupermarket.API.Controllers
     public class ReportsController : ControllerBase
     {
         private readonly SupermarketDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public ReportsController(SupermarketDbContext context)
+        public ReportsController(SupermarketDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         // Báo cáo nhanh theo ngày: tổng hóa đơn, tổng doanh thu, mặt hàng bán chạy nhất
@@ -62,6 +66,61 @@ namespace MiniSupermarket.API.Controllers
                 totalRevenue,
                 bestSellerName,
                 bestSellerQuantity
+            });
+        }
+
+        // =====================================================================
+        // BÁO CÁO DOANH THU THEO THU NGÂN — gọi Stored Procedure sp_GetRevenueByCashier
+        // GET: api/reports/revenue-by-cashier
+        // =====================================================================
+        [HttpGet("revenue-by-cashier")]
+        public IActionResult GetRevenueByCashier()
+        {
+            var reportList = new List<CashierRevenueDto>();
+            string connectionString = _configuration.GetConnectionString("DefaultConnection")!;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("sp_GetRevenueByCashier", connection))
+                {
+                    // BẮT BUỘC: chỉ định đây là Stored Procedure, không phải câu SQL thường
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    try
+                    {
+                        connection.Open();
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                reportList.Add(new CashierRevenueDto
+                                {
+                                    CashierUsername = reader["CashierUsername"].ToString() ?? string.Empty,
+                                    TotalOrders = Convert.ToInt32(reader["TotalOrders"]),
+                                    TotalRevenue = Convert.ToDecimal(reader["TotalRevenue"])
+                                });
+                            }
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        return StatusCode(500, new
+                        {
+                            success = false,
+                            message = "Lỗi thực thi Stored Procedure trên SQL Server: " + ex.Message
+                        });
+                    }
+                }
+            }
+
+            return Ok(new
+            {
+                success = true,
+                generatedAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                totalCashiers = reportList.Count,
+                grandTotalRevenue = reportList.Sum(x => x.TotalRevenue),
+                data = reportList
             });
         }
     }
