@@ -165,7 +165,7 @@ namespace MiniSupermarket.WinForms
                 MessageBox.Show("Bạn không có quyền xem dữ liệu tài chính của siêu thị!", "Từ chối", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
-            OpenChildForm(new FormQuickReport(), "BÁO CÁO DOANH THU & HIỆU SUẤT CA BÁN", btnReports);
+            OpenChildForm(new FormQuickReport(), "BÁO CÁO DOANH THU VÀ HIỆU SUẤT CA BÁN", btnReports);
         }
 
         private void btnUserManage_Click(object sender, EventArgs e)

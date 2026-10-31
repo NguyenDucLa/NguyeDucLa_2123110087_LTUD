@@ -8,6 +8,14 @@ namespace MiniSupermarket.WinForms
         // Địa chỉ Base API (khớp với cổng HTTPS của MiniSupermarket.API)
         private const string ApiBaseUrl = "https://localhost:7075/api/";
 
+        // ---- Trạng thái phân trang ----
+        private int _page = 1;
+        private int _pageSize = 10;
+        private int _totalPages = 1;
+        private int _totalItems = 0;
+        private bool _ready = false;
+        private List<CustomerDto>? _filteredCache;
+
         public FormCustomerManagement()
         {
             InitializeComponent();
@@ -45,17 +53,34 @@ namespace MiniSupermarket.WinForms
         // Sự kiện Form vừa bật lên: tự động tải dữ liệu khách hàng
         private async void FormCustomerManagement_Load(object sender, EventArgs e)
         {
+            cboPageSize.SelectedIndex = 1; // 10 dòng/trang
             await LoadDataAsync();
+            _ready = true;
         }
 
-        // Hàm dùng chung: GET danh sách khách hàng đổ lên DataGridView
+        // Hàm dùng chung: GET danh sách khách hàng có phân trang
         private async Task LoadDataAsync()
         {
             try
             {
                 using var client = GetAuthenticatedClient();
-                var customers = await client.GetFromJsonAsync<List<CustomerDto>>("customers");
-                dgvCustomers.DataSource = customers;
+                var paged = await client.GetFromJsonAsync<PagedResult<CustomerDto>>(
+                    $"customers/paged?page={_page}&pageSize={_pageSize}");
+
+                if (paged == null) return;
+
+                if (paged.TotalPages > 0 && _page > paged.TotalPages)
+                {
+                    _page = paged.TotalPages;
+                    await LoadDataAsync();
+                    return;
+                }
+
+                _filteredCache = null;
+                _totalItems = paged.TotalItems;
+                _totalPages = Math.Max(1, paged.TotalPages);
+                dgvCustomers.DataSource = paged.Data;
+                UpdatePager();
             }
             catch (Exception ex)
             {
@@ -63,9 +88,71 @@ namespace MiniSupermarket.WinForms
             }
         }
 
+        private void ApplyClientPage()
+        {
+            var list = _filteredCache ?? new List<CustomerDto>();
+
+            _totalItems = list.Count;
+            _totalPages = Math.Max(1, (int)Math.Ceiling(_totalItems / (double)_pageSize));
+            if (_page > _totalPages) _page = _totalPages;
+            if (_page < 1) _page = 1;
+
+            dgvCustomers.DataSource = list.Skip((_page - 1) * _pageSize).Take(_pageSize).ToList();
+            UpdatePager();
+        }
+
+        private void UpdatePager()
+        {
+            lblPageInfo.Text = $"Trang {_page}/{_totalPages}   ·   {_totalItems} khách hàng";
+            btnFirst.Enabled = btnPrev.Enabled = _page > 1;
+            btnNext.Enabled = btnLast.Enabled = _page < _totalPages;
+        }
+
+        private async Task ReloadCurrentAsync()
+        {
+            if (_filteredCache != null) ApplyClientPage();
+            else await LoadDataAsync();
+        }
+
+        private async void btnFirst_Click(object sender, EventArgs e)
+        {
+            _page = 1;
+            await ReloadCurrentAsync();
+        }
+
+        private async void btnPrev_Click(object sender, EventArgs e)
+        {
+            if (_page > 1) _page--;
+            await ReloadCurrentAsync();
+        }
+
+        private async void btnNext_Click(object sender, EventArgs e)
+        {
+            if (_page < _totalPages) _page++;
+            await ReloadCurrentAsync();
+        }
+
+        private async void btnLast_Click(object sender, EventArgs e)
+        {
+            _page = _totalPages;
+            await ReloadCurrentAsync();
+        }
+
+        private async void cboPageSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!_ready || cboPageSize.SelectedItem is not int size) return;
+
+            _pageSize = size;
+            _page = 1;
+            await ReloadCurrentAsync();
+        }
+
         // Nút Tải lại
         private async void btnLoad_Click(object sender, EventArgs e)
         {
+            txtKeyword.Clear();
+            _filteredCache = null;
+            _page = 1;
             await LoadDataAsync();
         }
 
@@ -106,7 +193,7 @@ namespace MiniSupermarket.WinForms
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Thêm mới khách hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                await LoadDataAsync();
+                await ReloadCurrentAsync();
                 ClearInputs();
             }
             else
@@ -140,7 +227,7 @@ namespace MiniSupermarket.WinForms
             if (response.IsSuccessStatusCode)
             {
                 MessageBox.Show("Cập nhật khách hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                await LoadDataAsync();
+                await ReloadCurrentAsync();
                 ClearInputs();
             }
             else
@@ -167,7 +254,7 @@ namespace MiniSupermarket.WinForms
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Xóa khách hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    await LoadDataAsync();
+                    await ReloadCurrentAsync();
                     ClearInputs();
                 }
                 else
@@ -183,6 +270,8 @@ namespace MiniSupermarket.WinForms
             string keyword = txtKeyword.Text.Trim();
             if (string.IsNullOrEmpty(keyword))
             {
+                _filteredCache = null;
+                _page = 1;
                 await LoadDataAsync(); // Ô tìm kiếm trống thì tải lại toàn bộ
                 return;
             }
@@ -192,7 +281,10 @@ namespace MiniSupermarket.WinForms
                 using var client = GetAuthenticatedClient();
                 // EscapeDataString để từ khóa tiếng Việt/URL-safe
                 var result = await client.GetFromJsonAsync<List<CustomerDto>>($"customers/search?keyword={Uri.EscapeDataString(keyword)}");
-                dgvCustomers.DataSource = result;
+
+                _filteredCache = result ?? new List<CustomerDto>();
+                _page = 1;
+                ApplyClientPage();
             }
             catch (Exception)
             {

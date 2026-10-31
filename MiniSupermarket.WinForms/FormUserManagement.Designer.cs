@@ -31,8 +31,18 @@ namespace MiniSupermarket.WinForms
             btnResetPassword = new Button();
             btnToggleLock = new Button();
 
+            pnlPager = new Panel();
+            lblPageInfo = new Label();
+            btnFirst = new Button();
+            btnPrev = new Button();
+            btnNext = new Button();
+            btnLast = new Button();
+            lblPageSize = new Label();
+            cboPageSize = new ComboBox();
+
             ((System.ComponentModel.ISupportInitialize)dgvUsers).BeginInit();
             grpInfo.SuspendLayout();
+            pnlPager.SuspendLayout();
             SuspendLayout();
 
             // 
@@ -45,7 +55,7 @@ namespace MiniSupermarket.WinForms
             dgvUsers.Location = new Point(10, 10);
             dgvUsers.Name = "dgvUsers";
             dgvUsers.RowHeadersWidth = 30;
-            dgvUsers.Size = new Size(700, 505);
+            dgvUsers.Size = new Size(700, 460);
             dgvUsers.TabIndex = 0;
             dgvUsers.CellClick += dgvUsers_CellClick;
 
@@ -150,9 +160,96 @@ namespace MiniSupermarket.WinForms
             btnToggleLock.Click += btnToggleLock_Click;
 
             // 
+            // pnlPager (Thanh phân trang - .Skip()/.Take() phía máy chủ)
+            // 
+            pnlPager.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlPager.BackColor = Color.White;
+            pnlPager.Controls.Add(cboPageSize);
+            pnlPager.Controls.Add(lblPageSize);
+            pnlPager.Controls.Add(btnLast);
+            pnlPager.Controls.Add(btnNext);
+            pnlPager.Controls.Add(btnPrev);
+            pnlPager.Controls.Add(btnFirst);
+            pnlPager.Controls.Add(lblPageInfo);
+            pnlPager.Location = new Point(10, 475);
+            pnlPager.Name = "pnlPager";
+            pnlPager.Size = new Size(700, 40);
+            pnlPager.TabIndex = 2;
+
+            // lblPageInfo
+            lblPageInfo.AutoSize = true;
+            lblPageInfo.Location = new Point(12, 12);
+            lblPageInfo.Name = "lblPageInfo";
+            lblPageInfo.Size = new Size(150, 15);
+            lblPageInfo.Text = "Trang 1/1  ·  0 tài khoản";
+
+            // btnFirst
+            btnFirst.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnFirst.Font = new Font("Segoe UI", 11F);
+            btnFirst.Location = new Point(215, 6);
+            btnFirst.Name = "btnFirst";
+            btnFirst.Size = new Size(34, 26);
+            btnFirst.TabIndex = 3;
+            btnFirst.Text = "«";
+            btnFirst.UseVisualStyleBackColor = true;
+            btnFirst.Click += btnFirst_Click;
+
+            // btnPrev
+            btnPrev.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnPrev.Font = new Font("Segoe UI", 11F);
+            btnPrev.Location = new Point(253, 6);
+            btnPrev.Name = "btnPrev";
+            btnPrev.Size = new Size(34, 26);
+            btnPrev.TabIndex = 4;
+            btnPrev.Text = "‹";
+            btnPrev.UseVisualStyleBackColor = true;
+            btnPrev.Click += btnPrev_Click;
+
+            // btnNext
+            btnNext.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnNext.Font = new Font("Segoe UI", 11F);
+            btnNext.Location = new Point(291, 6);
+            btnNext.Name = "btnNext";
+            btnNext.Size = new Size(34, 26);
+            btnNext.TabIndex = 5;
+            btnNext.Text = "›";
+            btnNext.UseVisualStyleBackColor = true;
+            btnNext.Click += btnNext_Click;
+
+            // btnLast
+            btnLast.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnLast.Font = new Font("Segoe UI", 11F);
+            btnLast.Location = new Point(329, 6);
+            btnLast.Name = "btnLast";
+            btnLast.Size = new Size(34, 26);
+            btnLast.TabIndex = 6;
+            btnLast.Text = "»";
+            btnLast.UseVisualStyleBackColor = true;
+            btnLast.Click += btnLast_Click;
+
+            // lblPageSize
+            lblPageSize.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lblPageSize.AutoSize = true;
+            lblPageSize.Location = new Point(380, 12);
+            lblPageSize.Name = "lblPageSize";
+            lblPageSize.Size = new Size(90, 15);
+            lblPageSize.Text = "Số dòng / trang:";
+
+            // cboPageSize
+            cboPageSize.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            cboPageSize.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboPageSize.Items.AddRange(new object[] { 5, 10, 20, 50 });
+            cboPageSize.Location = new Point(485, 8);
+            cboPageSize.Name = "cboPageSize";
+            cboPageSize.Size = new Size(70, 23);
+            cboPageSize.TabIndex = 7;
+            cboPageSize.SelectedIndexChanged += cboPageSize_SelectedIndexChanged;
+
+            // 
             // FormUserManagement
             // 
             ClientSize = new Size(1045, 527);
+            Controls.Add(pnlPager);
             Controls.Add(grpInfo);
             Controls.Add(dgvUsers);
             Name = "FormUserManagement";
@@ -162,6 +259,8 @@ namespace MiniSupermarket.WinForms
             ((System.ComponentModel.ISupportInitialize)dgvUsers).EndInit();
             grpInfo.ResumeLayout(false);
             grpInfo.PerformLayout();
+            pnlPager.ResumeLayout(false);
+            pnlPager.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -169,6 +268,15 @@ namespace MiniSupermarket.WinForms
 
         private DataGridView dgvUsers;
         private Panel grpInfo;
+
+        private Panel pnlPager;
+        private Label lblPageInfo;
+        private Button btnFirst;
+        private Button btnPrev;
+        private Button btnNext;
+        private Button btnLast;
+        private Label lblPageSize;
+        private ComboBox cboPageSize;
         private Label lblUsername;
         private TextBox txtUsername;
         private Label lblFullName;

@@ -6,6 +6,13 @@ namespace MiniSupermarket.WinForms
     {
         private int _selectedUserId = 0;
 
+        // ---- Trạng thái phân trang ----
+        private int _page = 1;
+        private int _pageSize = 10;
+        private int _totalPages = 1;
+        private int _totalItems = 0;
+        private bool _ready = false;
+
         public FormUserManagement()
         {
             InitializeComponent();
@@ -27,20 +34,79 @@ namespace MiniSupermarket.WinForms
 
         private async void FormUserManagement_Load(object sender, EventArgs e)
         {
+            cboPageSize.SelectedIndex = 1; // 10 dòng/trang
             await LoadUsersAsync();
+            _ready = true;
         }
 
+        // Nạp danh sách tài khoản theo trang (.Skip / .Take phía máy chủ)
         private async Task LoadUsersAsync()
         {
             try
             {
-                var users = await ApiClientService.Client.GetFromJsonAsync<List<UserDto>>("users");
-                dgvUsers.DataSource = users;
+                var paged = await ApiClientService.Client.GetFromJsonAsync<PagedResult<UserDto>>(
+                    $"users/paged?page={_page}&pageSize={_pageSize}");
+
+                if (paged == null) return;
+
+                if (paged.TotalPages > 0 && _page > paged.TotalPages)
+                {
+                    _page = paged.TotalPages;
+                    await LoadUsersAsync();
+                    return;
+                }
+
+                _totalItems = paged.TotalItems;
+                _totalPages = Math.Max(1, paged.TotalPages);
+                dgvUsers.DataSource = paged.Data;
+                UpdatePager();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi lấy danh sách tài khoản: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void UpdatePager()
+        {
+            lblPageInfo.Text = $"Trang {_page}/{_totalPages}   ·   {_totalItems} tài khoản";
+            btnFirst.Enabled = btnPrev.Enabled = _page > 1;
+            btnNext.Enabled = btnLast.Enabled = _page < _totalPages;
+        }
+
+        private async Task ReloadCurrentAsync() => await LoadUsersAsync();
+
+        private async void btnFirst_Click(object sender, EventArgs e)
+        {
+            _page = 1;
+            await ReloadCurrentAsync();
+        }
+
+        private async void btnPrev_Click(object sender, EventArgs e)
+        {
+            if (_page > 1) _page--;
+            await ReloadCurrentAsync();
+        }
+
+        private async void btnNext_Click(object sender, EventArgs e)
+        {
+            if (_page < _totalPages) _page++;
+            await ReloadCurrentAsync();
+        }
+
+        private async void btnLast_Click(object sender, EventArgs e)
+        {
+            _page = _totalPages;
+            await ReloadCurrentAsync();
+        }
+
+        private async void cboPageSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!_ready || cboPageSize.SelectedItem is not int size) return;
+
+            _pageSize = size;
+            _page = 1;
+            await ReloadCurrentAsync();
         }
 
         private void dgvUsers_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -77,7 +143,7 @@ namespace MiniSupermarket.WinForms
             if (res.IsSuccessStatusCode)
             {
                 MessageBox.Show("Tạo tài khoản mới thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                await LoadUsersAsync();
+                await ReloadCurrentAsync();
                 txtUsername.Clear();
                 txtPassword.Clear();
                 txtFullName.Clear();
@@ -125,7 +191,7 @@ namespace MiniSupermarket.WinForms
             if (res.IsSuccessStatusCode)
             {
                 MessageBox.Show("Đã thay đổi trạng thái Khóa / Mở khóa tài khoản!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                await LoadUsersAsync();
+                await ReloadCurrentAsync();
             }
             else
             {

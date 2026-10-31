@@ -32,12 +32,17 @@ namespace MiniSupermarket.WinForms
             txtCashReceived = new TextBox();
             lblChangeCaption = new Label();
             lblChange = new Label();
+            lblRedeem = new Label();
+            nudRedeemPoints = new NumericUpDown();
+            btnUseMaxPoints = new Button();
+            lblDiscount = new Label();
             btnCheckout = new Button();
             btnClearCart = new Button();
 
             pnlLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCart).BeginInit();
             pnlRight.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)nudRedeemPoints).BeginInit();
             SuspendLayout();
 
             // 
@@ -97,6 +102,10 @@ namespace MiniSupermarket.WinForms
             pnlRight.BackColor = Color.White;
             pnlRight.Controls.Add(btnClearCart);
             pnlRight.Controls.Add(btnCheckout);
+            pnlRight.Controls.Add(lblDiscount);
+            pnlRight.Controls.Add(btnUseMaxPoints);
+            pnlRight.Controls.Add(nudRedeemPoints);
+            pnlRight.Controls.Add(lblRedeem);
             pnlRight.Controls.Add(lblChange);
             pnlRight.Controls.Add(lblChangeCaption);
             pnlRight.Controls.Add(txtCashReceived);
@@ -128,6 +137,7 @@ namespace MiniSupermarket.WinForms
             txtCustomerPhone.PlaceholderText = "Nhập SĐT để tích điểm (bỏ trống nếu vãng lai)";
             txtCustomerPhone.Size = new Size(370, 25);
             txtCustomerPhone.TabIndex = 0;
+            txtCustomerPhone.Leave += txtCustomerPhone_Leave;
 
             // lblCustomerName
             lblCustomerName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -186,6 +196,45 @@ namespace MiniSupermarket.WinForms
             lblChange.Size = new Size(370, 35);
             lblChange.Text = "0 đ";
 
+            // lblRedeem - Điểm thưởng khả dụng (tiêu chí #47)
+            lblRedeem.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lblRedeem.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblRedeem.ForeColor = Color.FromArgb(120, 90, 20);
+            lblRedeem.Location = new Point(15, 346);
+            lblRedeem.Name = "lblRedeem";
+            lblRedeem.Size = new Size(370, 18);
+            lblRedeem.Text = "Điểm thưởng khả dụng: 0 điểm";
+
+            // nudRedeemPoints - số điểm muốn dùng (1 điểm = 1.000đ)
+            nudRedeemPoints.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            nudRedeemPoints.Font = new Font("Segoe UI", 10F);
+            nudRedeemPoints.Location = new Point(15, 368);
+            nudRedeemPoints.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            nudRedeemPoints.Name = "nudRedeemPoints";
+            nudRedeemPoints.Size = new Size(120, 25);
+            nudRedeemPoints.TabIndex = 4;
+            nudRedeemPoints.ThousandsSeparator = true;
+            nudRedeemPoints.ValueChanged += nudRedeemPoints_ValueChanged;
+
+            // btnUseMaxPoints
+            btnUseMaxPoints.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            btnUseMaxPoints.Location = new Point(141, 368);
+            btnUseMaxPoints.Name = "btnUseMaxPoints";
+            btnUseMaxPoints.Size = new Size(100, 26);
+            btnUseMaxPoints.TabIndex = 5;
+            btnUseMaxPoints.Text = "Dùng tối đa";
+            btnUseMaxPoints.UseVisualStyleBackColor = true;
+            btnUseMaxPoints.Click += btnUseMaxPoints_Click;
+
+            // lblDiscount
+            lblDiscount.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lblDiscount.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
+            lblDiscount.ForeColor = Color.FromArgb(34, 139, 34);
+            lblDiscount.Location = new Point(15, 398);
+            lblDiscount.Name = "lblDiscount";
+            lblDiscount.Size = new Size(370, 20);
+            lblDiscount.Text = "Giảm từ điểm: 0 đ";
+
             // btnCheckout
             btnCheckout.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             btnCheckout.BackColor = Color.FromArgb(34, 139, 34);
@@ -193,9 +242,9 @@ namespace MiniSupermarket.WinForms
             btnCheckout.FlatStyle = FlatStyle.Flat;
             btnCheckout.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             btnCheckout.ForeColor = Color.White;
-            btnCheckout.Location = new Point(15, 400);
+            btnCheckout.Location = new Point(15, 428);
             btnCheckout.Name = "btnCheckout";
-            btnCheckout.Size = new Size(370, 70);
+            btnCheckout.Size = new Size(370, 65);
             btnCheckout.TabIndex = 2;
             btnCheckout.Text = "THANH TOÁN (F9)";
             btnCheckout.UseVisualStyleBackColor = false;
@@ -208,7 +257,7 @@ namespace MiniSupermarket.WinForms
             btnClearCart.FlatStyle = FlatStyle.Flat;
             btnClearCart.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnClearCart.ForeColor = Color.White;
-            btnClearCart.Location = new Point(15, 485);
+            btnClearCart.Location = new Point(15, 505);
             btnClearCart.Name = "btnClearCart";
             btnClearCart.Size = new Size(370, 55);
             btnClearCart.TabIndex = 3;
@@ -232,6 +281,7 @@ namespace MiniSupermarket.WinForms
             ((System.ComponentModel.ISupportInitialize)dgvCart).EndInit();
             pnlRight.ResumeLayout(false);
             pnlRight.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)nudRedeemPoints).EndInit();
             ResumeLayout(false);
         }
 
@@ -253,6 +303,10 @@ namespace MiniSupermarket.WinForms
         private TextBox txtCashReceived;
         private Label lblChangeCaption;
         private Label lblChange;
+        private Label lblRedeem;
+        private NumericUpDown nudRedeemPoints;
+        private Button btnUseMaxPoints;
+        private Label lblDiscount;
         private Button btnCheckout;
         private Button btnClearCart;
     }

@@ -41,10 +41,20 @@ namespace MiniSupermarket.WinForms
             btnAdd = new Button();
             btnUpdate = new Button();
             btnDelete = new Button();
+            pnlPager = new Panel();
+            lblPageInfo = new Label();
+            btnFirst = new Button();
+            btnPrev = new Button();
+            btnNext = new Button();
+            btnLast = new Button();
+            lblPageSize = new Label();
+            cboPageSize = new ComboBox();
+            btnExportCsv = new Button();
 
             pnlTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             grpInfo.SuspendLayout();
+            pnlPager.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudPrice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudStock).BeginInit();
             SuspendLayout();
@@ -112,7 +122,7 @@ namespace MiniSupermarket.WinForms
             dgvProducts.Name = "dgvProducts";
             dgvProducts.RowHeadersWidth = 30;
             dgvProducts.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvProducts.Size = new Size(880, 613);
+            dgvProducts.Size = new Size(880, 568);
             dgvProducts.TabIndex = 1;
             dgvProducts.CellClick += dgvProducts_CellClick;
 
@@ -260,9 +270,113 @@ namespace MiniSupermarket.WinForms
             btnDelete.Click += btnDelete_Click;
 
             // 
+            // pnlPager (Thanh phân trang - dùng .Skip()/.Take() phía máy chủ)
+            // 
+            pnlPager.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlPager.BackColor = Color.White;
+            pnlPager.Controls.Add(cboPageSize);
+            pnlPager.Controls.Add(lblPageSize);
+            pnlPager.Controls.Add(btnExportCsv);
+            pnlPager.Controls.Add(btnLast);
+            pnlPager.Controls.Add(btnNext);
+            pnlPager.Controls.Add(btnPrev);
+            pnlPager.Controls.Add(btnFirst);
+            pnlPager.Controls.Add(lblPageInfo);
+            pnlPager.Location = new Point(10, 648);
+            pnlPager.Name = "pnlPager";
+            pnlPager.Size = new Size(880, 43);
+            pnlPager.TabIndex = 3;
+
+            // lblPageInfo
+            lblPageInfo.AutoSize = true;
+            lblPageInfo.Location = new Point(12, 15);
+            lblPageInfo.Name = "lblPageInfo";
+            lblPageInfo.Size = new Size(160, 15);
+            lblPageInfo.Text = "Trang 1/1  ·  0 sản phẩm";
+
+            // btnFirst
+            btnFirst.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnFirst.Font = new Font("Segoe UI", 11F);
+            btnFirst.Location = new Point(230, 7);
+            btnFirst.Name = "btnFirst";
+            btnFirst.Size = new Size(38, 30);
+            btnFirst.TabIndex = 4;
+            btnFirst.Text = "«";
+            btnFirst.UseVisualStyleBackColor = true;
+            btnFirst.Click += btnFirst_Click;
+
+            // btnPrev
+            btnPrev.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnPrev.Font = new Font("Segoe UI", 11F);
+            btnPrev.Location = new Point(272, 7);
+            btnPrev.Name = "btnPrev";
+            btnPrev.Size = new Size(38, 30);
+            btnPrev.TabIndex = 5;
+            btnPrev.Text = "‹";
+            btnPrev.UseVisualStyleBackColor = true;
+            btnPrev.Click += btnPrev_Click;
+
+            // btnNext
+            btnNext.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnNext.Font = new Font("Segoe UI", 11F);
+            btnNext.Location = new Point(314, 7);
+            btnNext.Name = "btnNext";
+            btnNext.Size = new Size(38, 30);
+            btnNext.TabIndex = 6;
+            btnNext.Text = "›";
+            btnNext.UseVisualStyleBackColor = true;
+            btnNext.Click += btnNext_Click;
+
+            // btnLast
+            btnLast.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnLast.Font = new Font("Segoe UI", 11F);
+            btnLast.Location = new Point(356, 7);
+            btnLast.Name = "btnLast";
+            btnLast.Size = new Size(38, 30);
+            btnLast.TabIndex = 7;
+            btnLast.Text = "»";
+            btnLast.UseVisualStyleBackColor = true;
+            btnLast.Click += btnLast_Click;
+
+            // lblPageSize
+            lblPageSize.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lblPageSize.AutoSize = true;
+            lblPageSize.Location = new Point(415, 15);
+            lblPageSize.Name = "lblPageSize";
+            lblPageSize.Size = new Size(90, 15);
+            lblPageSize.Text = "Số dòng / trang:";
+
+            // cboPageSize
+            cboPageSize.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            cboPageSize.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboPageSize.Items.AddRange(new object[] { 5, 10, 20, 50 });
+            cboPageSize.Location = new Point(515, 11);
+            cboPageSize.Name = "cboPageSize";
+            cboPageSize.Size = new Size(70, 23);
+            cboPageSize.TabIndex = 8;
+            cboPageSize.SelectedIndexChanged += cboPageSize_SelectedIndexChanged;
+
+            // btnExportCsv
+            btnExportCsv.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnExportCsv.BackColor = Color.FromArgb(16, 185, 129);
+            btnExportCsv.Cursor = Cursors.Hand;
+            btnExportCsv.FlatAppearance.BorderSize = 0;
+            btnExportCsv.FlatStyle = FlatStyle.Flat;
+            btnExportCsv.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnExportCsv.ForeColor = Color.White;
+            btnExportCsv.Location = new Point(650, 9);
+            btnExportCsv.Name = "btnExportCsv";
+            btnExportCsv.Size = new Size(170, 28);
+            btnExportCsv.TabIndex = 9;
+            btnExportCsv.Text = "📤 Xuất Excel (CSV)";
+            btnExportCsv.UseVisualStyleBackColor = false;
+            btnExportCsv.Click += btnExportCsv_Click;
+
+            // 
             // FormProductManagement
             // 
             ClientSize = new Size(1200, 700);
+            Controls.Add(pnlPager);
             Controls.Add(grpInfo);
             Controls.Add(dgvProducts);
             Controls.Add(pnlTop);
@@ -275,6 +389,8 @@ namespace MiniSupermarket.WinForms
             ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
             grpInfo.ResumeLayout(false);
             grpInfo.PerformLayout();
+            pnlPager.ResumeLayout(false);
+            pnlPager.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)nudPrice).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudStock).EndInit();
             ResumeLayout(false);
@@ -288,6 +404,16 @@ namespace MiniSupermarket.WinForms
         private Label lblFilter;
         private ComboBox cboFilterCategory;
         private Button btnSearch;
+
+        private Panel pnlPager;
+        private Label lblPageInfo;
+        private Button btnFirst;
+        private Button btnPrev;
+        private Button btnNext;
+        private Button btnLast;
+        private Label lblPageSize;
+        private ComboBox cboPageSize;
+        private Button btnExportCsv;
 
         private DataGridView dgvProducts;
 

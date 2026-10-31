@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MiniSupermarket.API.Data;
 using System.Text;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +29,17 @@ builder.Services.AddAuthentication(options => {
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+// Cho phép WinForms Client gọi API (CORS)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowWinForms", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "MiniSupermarket API", Version = "v1" });
@@ -71,9 +80,20 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowWinForms");
+
 // Bắt buộc gọi UseAuthentication trước UseAuthorization
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Nạp hóa đơn demo 30 ngày gần nhất (chỉ chạy ở lần khởi động đầu tiên)
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<SupermarketDbContext>();
+    await DbInitializer.SeedDemoOrdersAsync(db);
+    await DbInitializer.BackfillCustomerCreatedDatesAsync(db);
+}
+
 app.Run();

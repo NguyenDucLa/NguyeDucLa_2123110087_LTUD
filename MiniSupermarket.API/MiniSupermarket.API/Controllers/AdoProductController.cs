@@ -32,7 +32,7 @@ namespace MiniSupermarket.API.Controllers
         // GET: api/ado-products/barcode/8938000000001
         // =============================================================
         [HttpGet("barcode/{barcode}")]
-        public IActionResult GetProductByBarcode(string barcode)
+        public async Task<IActionResult> GetProductByBarcode(string barcode)
         {
             if (string.IsNullOrWhiteSpace(barcode))
                 return BadRequest(new { message = "Mã vạch không được để trống!" });
@@ -52,11 +52,11 @@ namespace MiniSupermarket.API.Controllers
 
                     try
                     {
-                        connection.Open();
+                        await connection.OpenAsync();
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
                         {
-                            if (reader.Read())
+                            if (await reader.ReadAsync())
                             {
                                 var dto = new ProductLookupDto
                                 {
@@ -85,7 +85,7 @@ namespace MiniSupermarket.API.Controllers
         // GET: api/ado-products/disconnected-cache
         // =============================================================
         [HttpGet("disconnected-cache")]
-        public IActionResult GetProductsDisconnected()
+        public async Task<IActionResult> GetProductsDisconnected()
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection")!;
 
@@ -102,7 +102,8 @@ namespace MiniSupermarket.API.Controllers
                 using (SqlDataAdapter adapter = new SqlDataAdapter(command))
                 {
                     // Fill() tự mở kết nối -> đổ dữ liệu vào DataTable -> tự đóng kết nối
-                    adapter.Fill(productTable);
+                    // (chạy trên luồng nền để không chặn request)
+                    await Task.Run(() => adapter.Fill(productTable));
                 }
             }
 
@@ -133,7 +134,7 @@ namespace MiniSupermarket.API.Controllers
         // GET: api/ado-products/filter-stock?minStock=50
         // =============================================================
         [HttpGet("filter-stock")]
-        public IActionResult FilterByStock([FromQuery] int minStock = 50)
+        public async Task<IActionResult> FilterByStock([FromQuery] int minStock = 50)
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection")!;
             var resultList = new List<ProductLookupDto>();
@@ -151,10 +152,10 @@ namespace MiniSupermarket.API.Controllers
 
                     try
                     {
-                        connection.Open();
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        await connection.OpenAsync();
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
                         {
-                            while (reader.Read())
+                            while (await reader.ReadAsync())
                             {
                                 resultList.Add(new ProductLookupDto
                                 {

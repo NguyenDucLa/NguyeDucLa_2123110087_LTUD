@@ -37,10 +37,20 @@
             btnUpdate = new Button();
             btnDelete = new Button();
 
+            pnlPager = new Panel();
+            lblPageInfo = new Label();
+            btnFirst = new Button();
+            btnPrev = new Button();
+            btnNext = new Button();
+            btnLast = new Button();
+            lblPageSize = new Label();
+            cboPageSize = new ComboBox();
+
             grpSearch.SuspendLayout();
             grpList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCategories).BeginInit();
             grpInfo.SuspendLayout();
+            pnlPager.SuspendLayout();
             SuspendLayout();
 
             // 
@@ -90,6 +100,7 @@
             // 
             grpList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             grpList.Controls.Add(dgvCategories);
+            grpList.Controls.Add(pnlPager);
             grpList.Location = new Point(12, 80);
             grpList.Name = "grpList";
             grpList.Size = new Size(776, 548);
@@ -107,6 +118,92 @@
             dgvCategories.Size = new Size(770, 522);
             dgvCategories.TabIndex = 0;
             dgvCategories.CellClick += dgvCategories_CellClick;
+
+            // 
+            // pnlPager (Thanh phân trang - .Skip()/.Take() phía máy chủ)
+            // 
+            pnlPager.BackColor = Color.White;
+            pnlPager.Controls.Add(cboPageSize);
+            pnlPager.Controls.Add(lblPageSize);
+            pnlPager.Controls.Add(btnLast);
+            pnlPager.Controls.Add(btnNext);
+            pnlPager.Controls.Add(btnPrev);
+            pnlPager.Controls.Add(btnFirst);
+            pnlPager.Controls.Add(lblPageInfo);
+            pnlPager.Dock = DockStyle.Bottom;
+            pnlPager.Location = new Point(3, 502);
+            pnlPager.Name = "pnlPager";
+            pnlPager.Size = new Size(770, 43);
+
+            // lblPageInfo
+            lblPageInfo.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lblPageInfo.AutoSize = true;
+            lblPageInfo.Location = new Point(12, 15);
+            lblPageInfo.Name = "lblPageInfo";
+            lblPageInfo.Size = new Size(160, 15);
+            lblPageInfo.Text = "Trang 1/1  ·  0 nhóm hàng";
+
+            // btnFirst
+            btnFirst.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnFirst.Font = new Font("Segoe UI", 11F);
+            btnFirst.Location = new Point(200, 7);
+            btnFirst.Name = "btnFirst";
+            btnFirst.Size = new Size(36, 28);
+            btnFirst.TabIndex = 1;
+            btnFirst.Text = "«";
+            btnFirst.UseVisualStyleBackColor = true;
+            btnFirst.Click += btnFirst_Click;
+
+            // btnPrev
+            btnPrev.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnPrev.Font = new Font("Segoe UI", 11F);
+            btnPrev.Location = new Point(240, 7);
+            btnPrev.Name = "btnPrev";
+            btnPrev.Size = new Size(36, 28);
+            btnPrev.TabIndex = 2;
+            btnPrev.Text = "‹";
+            btnPrev.UseVisualStyleBackColor = true;
+            btnPrev.Click += btnPrev_Click;
+
+            // btnNext
+            btnNext.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnNext.Font = new Font("Segoe UI", 11F);
+            btnNext.Location = new Point(280, 7);
+            btnNext.Name = "btnNext";
+            btnNext.Size = new Size(36, 28);
+            btnNext.TabIndex = 3;
+            btnNext.Text = "›";
+            btnNext.UseVisualStyleBackColor = true;
+            btnNext.Click += btnNext_Click;
+
+            // btnLast
+            btnLast.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnLast.Font = new Font("Segoe UI", 11F);
+            btnLast.Location = new Point(320, 7);
+            btnLast.Name = "btnLast";
+            btnLast.Size = new Size(36, 28);
+            btnLast.TabIndex = 4;
+            btnLast.Text = "»";
+            btnLast.UseVisualStyleBackColor = true;
+            btnLast.Click += btnLast_Click;
+
+            // lblPageSize
+            lblPageSize.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lblPageSize.AutoSize = true;
+            lblPageSize.Location = new Point(375, 15);
+            lblPageSize.Name = "lblPageSize";
+            lblPageSize.Size = new Size(90, 15);
+            lblPageSize.Text = "Số dòng / trang:";
+
+            // cboPageSize
+            cboPageSize.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            cboPageSize.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboPageSize.Items.AddRange(new object[] { 5, 10, 20, 50 });
+            cboPageSize.Location = new Point(475, 11);
+            cboPageSize.Name = "cboPageSize";
+            cboPageSize.Size = new Size(70, 23);
+            cboPageSize.TabIndex = 5;
+            cboPageSize.SelectedIndexChanged += cboPageSize_SelectedIndexChanged;
 
             // 
             // grpInfo (Khung Thông tin Nhóm hàng)
@@ -219,6 +316,8 @@
             ((System.ComponentModel.ISupportInitialize)dgvCategories).EndInit();
             grpInfo.ResumeLayout(false);
             grpInfo.PerformLayout();
+            pnlPager.ResumeLayout(false);
+            pnlPager.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -231,6 +330,15 @@
 
         private GroupBox grpList;
         private DataGridView dgvCategories;
+
+        private Panel pnlPager;
+        private Label lblPageInfo;
+        private Button btnFirst;
+        private Button btnPrev;
+        private Button btnNext;
+        private Button btnLast;
+        private Label lblPageSize;
+        private ComboBox cboPageSize;
 
         private GroupBox grpInfo;
         private Label lblId;

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MiniSupermarket.API.Data;
+using MiniSupermarket.API.Helpers;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -31,10 +32,22 @@ namespace MiniSupermarket.API.Controllers
             }
 
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
-
-            if (user == null || user.Password != request.Password)
+            if (user == null)
             {
                 return Unauthorized(new { success = false, message = "Sai tài khoản hoặc mật khẩu!" });
+            }
+
+            // So khớp mật khẩu đã băm (PBKDF2), không so sánh chuỗi thô
+            if (!PasswordHelper.Verify(user.Password, request.Password, out bool needUpgrade))
+            {
+                return Unauthorized(new { success = false, message = "Sai tài khoản hoặc mật khẩu!" });
+            }
+
+            // Dữ liệu cũ còn lưu mật khẩu dạng thô -> tự động băm lại và cập nhật
+            if (needUpgrade)
+            {
+                user.Password = PasswordHelper.Hash(request.Password);
+                await _context.SaveChangesAsync();
             }
 
             if (!user.IsActive)

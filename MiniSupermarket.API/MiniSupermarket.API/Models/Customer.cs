@@ -27,5 +27,9 @@ namespace MiniSupermarket.API.Models
 
         [StringLength(50)]
         public string MembershipRank { get; set; } = "Chuẩn"; // Hạng thẻ, mặc định "Chuẩn"
+
+        // Ngày đăng ký thành viên (dùng cho thống kê khách hàng mới)
+        [Column(TypeName = "datetime2")]
+        public DateTime CreatedDate { get; set; }
     }
 }

@@ -45,6 +45,7 @@ Buổi 02 tập trung vào việc cài đặt cơ chế **Xác thực (Authentic
 
 ### 1. Web API Backend (`MiniSupermarket.API`)
 - **Tạo AuthController:** Xây dựng endpoint `POST /api/auth/login` kiểm tra tài khoản, mật khẩu và cấp phát JWT Token.
+- **Băm mật khẩu (Password Hashing):** Mật khẩu **không lưu dạng thô** trong CSDL mà được băm bằng `PasswordHasher` của ASP.NET Core (PBKDF2 – HMAC-SHA256, 100.000 vòng lặp, salt riêng cho từng mật khẩu) trong `Helpers/PasswordHelper.cs`. Khi đăng nhập, hệ thống so khớp bằng `VerifyHashedPassword`; dữ liệu cũ còn lưu thô sẽ **tự động được băm lại** ngay lần đăng nhập đầu tiên.
 - **Cấu hình JWT Bearer Authentication:** Khai báo cấu hình `Authentication` và `Authorization` trong `Program.cs`.
 - **Cấu hình Swagger UI:** Bổ sung nút **Authorize** hỗ trợ truyền JWT Token trực tiếp trên giao diện Swagger để thử nghiệm API.
 - **Phân quyền Endpoint:**
@@ -158,8 +159,19 @@ FormMainShell
 1. **FormMainShell:** sidebar tối màu `(24,30,48)`, nút `Flat` + `TextAlign=MiddleLeft`; header trắng; vùng nội dung `(244,245,247)`.
 2. **Nạp form động:** `OpenChildForm()` đóng form cũ → `TopLevel=false`, `Dock=Fill` → `panelMainContent.Controls.Add()` → đồng bộ `lblTitle`; `HighlightActiveButton()` tô màu nút đang chọn.
 3. **RBAC:** `ApplyRolePermissions()` bật/tắt nút theo vai trò; `OpenDefaultScreenByRole()` mở màn hình mặc định.
-4. **Tài khoản mẫu (15):** `admin01/02`, `admin_backup`, `supervisor` = **Admin**; `cashier01–06` = **Cashier**; `ware01–05` = **Warehouse** (mật khẩu `123456`). Đăng nhập kiểm tra bảng `Users` trong CSDL.
+4. **Tài khoản mẫu (15):** `admin01/02`, `admin_backup`, `supervisor` = **Admin**; `cashier01–06` = **Cashier**; `ware01–05` = **Warehouse** (mật khẩu đăng nhập `123456` – trong CSDL chỉ lưu **chuỗi băm PBKDF2**, không lưu mật khẩu thô). Đăng nhập kiểm tra bảng `Users` trong CSDL.
 5. **Form con:** `FormPOS`, `FormProductManagement`, `FormUserManagement`, `FormQuickReport` + tái sử dụng `FormCategoryManagement`, `FormCustomerManagement`.
+6. **Phân trang danh sách (4 màn hình):** `FormProductManagement`, `FormCategoryManagement`, `FormCustomerManagement`, `FormUserManagement` đều gọi endpoint `.../paged?page=&pageSize=` (LINQ `.Skip()` / `.Take()` phía máy chủ). Thanh dưới lưới có nút `« ‹ › »`, nhãn `Trang x/y · n dòng` và combobox **Số dòng / trang** (5 · 10 · 20 · 50). Khi đang tìm kiếm/lọc thì lưới phân trang trên tập kết quả đã lọc.
+7. **Dữ liệu mẫu:** 12 nhóm hàng · 60 sản phẩm · 30 khách hàng (địa chỉ đầy đủ trong 1 cột) · 15 tài khoản; `DbInitializer` tự bù hóa đơn demo cho **mọi ngày còn thiếu trong 30 ngày gần nhất** (mỗi ngày 2–4 hóa đơn) và rải ngày đăng ký cho khách hàng mẫu.
+8. **Dashboard báo cáo (`FormQuickReport`):** chọn **Từ ngày – Đến ngày**, nút **Xem**, combobox **Nhóm theo: Ngày / Tuần / Tháng**, nút **Xuất Excel (CSV)**.
+
+### Các tiêu chí mở rộng (43 – 48)
+9. **#43 Cảnh báo hàng sắp hết:** bắt sự kiện `CellFormatting` của `dgvProducts` — sản phẩm có `StockQuantity <= 10` được tô nền `Color.LightCoral`, chữ in đậm (xem trang 5–6 của lưới sản phẩm).
+10. **#44 Thẻ KPI tổng quan:** `GET api/reports/dashboard-summary` — mỗi chỉ số lấy bằng **ADO.NET `ExecuteScalar`** (doanh thu hôm nay, tổng hóa đơn, khách hàng mới đăng ký, mặt hàng tồn ≤ 10). Cột `Customers.CreatedDate` được thêm bằng migration `AddCustomerCreatedDate`.
+11. **#45 Biểu đồ cột doanh thu:** Stored Procedure `Database/sp_GetRevenueByDay.sql` (`GROUP BY CAST(OrderDate AS DATE)`) → `GET api/reports/revenue-by-day?from=&to=` → vẽ bằng control **`System.Windows.Forms.DataVisualization.Charting.Chart`** (`SeriesChartType.Column`).
+12. **#46 Top 5 sản phẩm bán chạy:** `GET api/reports/top-products?date=&top=5` với LINQ `GroupBy` → `OrderByDescending(Sum(Quantity))` → `Take(5)`.
+13. **#47 Đổi điểm thưởng trừ tiền:** POS nhập SĐT khách → hiện điểm khả dụng; nhập số điểm (1 điểm = 1.000 đ) hoặc bấm **Dùng tối đa**. `POST api/orders/checkout` trừ `Customers.RewardPoints` và trừ `TotalAmount` **trong cùng một transaction**, không đủ điểm thì trả `400`.
+14. **#48 Xuất báo cáo CSV:** nút **Xuất Excel (CSV)** ở `FormProductManagement` (mặt hàng + tồn kho) và `FormQuickReport` (KPI + doanh thu theo ngày + top 5 + theo thu ngân), ghi UTF-8 **có BOM** để Excel hiển thị đúng tiếng Việt.
 
 ## 🔐 Phân quyền
 | Vai trò | Nút hiển thị | Màn hình mặc định |

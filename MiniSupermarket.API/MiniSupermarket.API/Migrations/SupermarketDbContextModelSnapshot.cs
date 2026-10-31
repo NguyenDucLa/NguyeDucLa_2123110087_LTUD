@@ -73,6 +73,48 @@ namespace MiniSupermarket.API.Migrations
                             CategoryId = 5,
                             CategoryName = "Nông sản khô & Gia vị",
                             Description = "Gạo ST25, hạt điều, các loại hạt và gia vị"
+                        },
+                        new
+                        {
+                            CategoryId = 6,
+                            CategoryName = "Rau thơm & Gia vị tươi",
+                            Description = "Hành lá, ngò gai, húng quế, sả, ớt, gừng"
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            CategoryName = "Trái cây nhập khẩu",
+                            Description = "Nho Hàn Quốc, cherry Mỹ, kiwi New Zealand..."
+                        },
+                        new
+                        {
+                            CategoryId = 8,
+                            CategoryName = "Thực phẩm hữu cơ",
+                            Description = "Trứng, sữa, đậu hũ, mật ong, dầu dừa hữu cơ"
+                        },
+                        new
+                        {
+                            CategoryId = 9,
+                            CategoryName = "Đồ uống & Nước ép",
+                            Description = "Nước ép trái cây, trà matcha, cà phê rang xay"
+                        },
+                        new
+                        {
+                            CategoryId = 10,
+                            CategoryName = "Ngũ cốc & Yến mạch",
+                            Description = "Yến mạch, gạo lứt, đậu xanh, hạt chia, granola"
+                        },
+                        new
+                        {
+                            CategoryId = 11,
+                            CategoryName = "Bơ - Hạt dinh dưỡng",
+                            Description = "Bơ sáp, hạnh nhân, óc chó, mắc ca, hạt bí"
+                        },
+                        new
+                        {
+                            CategoryId = 12,
+                            CategoryName = "Giỏ quà & Combo",
+                            Description = "Combo rau sạch, giỏ quà trái cây, combo nấu lẩu"
                         });
                 });
 
@@ -87,6 +129,9 @@ namespace MiniSupermarket.API.Migrations
                     b.Property<string>("Address")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CustomerName")
                         .IsRequired()
@@ -115,6 +160,7 @@ namespace MiniSupermarket.API.Migrations
                         {
                             CustomerId = 1,
                             Address = "12 Nguyễn Trãi, Phường Bến Thành, Quận 1, TP. Hồ Chí Minh",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerName = "Nguyễn Thị Lan",
                             MembershipRank = "Vàng",
                             PhoneNumber = "0901122334",
@@ -124,6 +170,7 @@ namespace MiniSupermarket.API.Migrations
                         {
                             CustomerId = 2,
                             Address = "45 Lê Lợi, Phường 4, Quận Gò Vấp, TP. Hồ Chí Minh",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerName = "Trần Văn Hùng",
                             MembershipRank = "Bạc",
                             PhoneNumber = "0918877665",
@@ -133,6 +180,7 @@ namespace MiniSupermarket.API.Migrations
                         {
                             CustomerId = 3,
                             Address = "78 Trần Hưng Đạo, Phường Cửa Nam, Quận Hoàn Kiếm, TP. Hà Nội",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerName = "Lê Thu Hà",
                             MembershipRank = "Chuẩn",
                             PhoneNumber = "0983344556",
@@ -142,6 +190,7 @@ namespace MiniSupermarket.API.Migrations
                         {
                             CustomerId = 4,
                             Address = "23 Nguyễn Văn Cừ, Phường Bồ Đề, Quận Long Biên, TP. Hà Nội",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerName = "Phạm Minh Quân",
                             MembershipRank = "Bạc",
                             PhoneNumber = "0905556677",
@@ -151,10 +200,261 @@ namespace MiniSupermarket.API.Migrations
                         {
                             CustomerId = 5,
                             Address = "150 Điện Biên Phủ, Phường Chính Gián, Quận Thanh Khê, TP. Đà Nẵng",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerName = "Đỗ Thị Mai",
                             MembershipRank = "Vàng",
                             PhoneNumber = "0938777888",
                             RewardPoints = 220
+                        },
+                        new
+                        {
+                            CustomerId = 6,
+                            Address = "88 Phan Xích Long, Phường 2, Quận Phú Nhuận, TP. Hồ Chí Minh",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Võ Thành Nam",
+                            MembershipRank = "Kim cương",
+                            PhoneNumber = "0903667788",
+                            RewardPoints = 320
+                        },
+                        new
+                        {
+                            CustomerId = 7,
+                            Address = "27 Ung Văn Khiêm, Phường 25, Quận Bình Thạnh, TP. Hồ Chí Minh",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Bùi Thanh Tuyền",
+                            MembershipRank = "Chuẩn",
+                            PhoneNumber = "0917888999",
+                            RewardPoints = 45
+                        },
+                        new
+                        {
+                            CustomerId = 8,
+                            Address = "156 Tô Hiến Thành, Phường 13, Quận 10, TP. Hồ Chí Minh",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Hoàng Quốc Bảo",
+                            MembershipRank = "Vàng",
+                            PhoneNumber = "0979223344",
+                            RewardPoints = 190
+                        },
+                        new
+                        {
+                            CustomerId = 9,
+                            Address = "9 Nguyễn Thị Minh Khai, Phường Đa Kao, Quận 1, TP. Hồ Chí Minh",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Nguyễn Kim Ngân",
+                            MembershipRank = "Bạc",
+                            PhoneNumber = "0908776655",
+                            RewardPoints = 65
+                        },
+                        new
+                        {
+                            CustomerId = 10,
+                            Address = "301 Quang Trung, Phường 10, Quận Gò Vấp, TP. Hồ Chí Minh",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Trịnh Văn Lộc",
+                            MembershipRank = "Chuẩn",
+                            PhoneNumber = "0932114455",
+                            RewardPoints = 30
+                        },
+                        new
+                        {
+                            CustomerId = 11,
+                            Address = "74 Hoàng Diệu, Phường 6, Quận 4, TP. Hồ Chí Minh",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Đặng Thùy Dương",
+                            MembershipRank = "Kim cương",
+                            PhoneNumber = "0987112233",
+                            RewardPoints = 410
+                        },
+                        new
+                        {
+                            CustomerId = 12,
+                            Address = "12 Lý Thường Kiệt, Phường Trần Hưng Đạo, Quận Hoàn Kiếm, TP. Hà Nội",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Lý Hoài Anh",
+                            MembershipRank = "Chuẩn",
+                            PhoneNumber = "0912667788",
+                            RewardPoints = 25
+                        },
+                        new
+                        {
+                            CustomerId = 13,
+                            Address = "55 Nguyễn Trãi, Phường Thanh Xuân Trung, Quận Thanh Xuân, TP. Hà Nội",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Ngô Đức Thịnh",
+                            MembershipRank = "Vàng",
+                            PhoneNumber = "0967334455",
+                            RewardPoints = 140
+                        },
+                        new
+                        {
+                            CustomerId = 14,
+                            Address = "18 Trần Duy Hưng, Phường Trung Hòa, Quận Cầu Giấy, TP. Hà Nội",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Phan Thị Bích",
+                            MembershipRank = "Bạc",
+                            PhoneNumber = "0904556677",
+                            RewardPoints = 70
+                        },
+                        new
+                        {
+                            CustomerId = 15,
+                            Address = "209 Tây Sơn, Phường Quang Trung, Quận Đống Đa, TP. Hà Nội",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Trương Công Định",
+                            MembershipRank = "Chuẩn",
+                            PhoneNumber = "0945667788",
+                            RewardPoints = 15
+                        },
+                        new
+                        {
+                            CustomerId = 16,
+                            Address = "46 Mỹ Đình, Phường Mỹ Đình 2, Quận Nam Từ Liêm, TP. Hà Nội",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Đinh Thị Hồng",
+                            MembershipRank = "Kim cương",
+                            PhoneNumber = "0978334499",
+                            RewardPoints = 260
+                        },
+                        new
+                        {
+                            CustomerId = 17,
+                            Address = "33 Lạch Tray, Phường Đằng Giang, Quận Ngô Quyền, TP. Hải Phòng",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Vũ Minh Trí",
+                            MembershipRank = "Bạc",
+                            PhoneNumber = "0398221144",
+                            RewardPoints = 55
+                        },
+                        new
+                        {
+                            CustomerId = 18,
+                            Address = "120 Hồ Tùng Mậu, Phường Bắc Lý, TP. Đồng Hới, TP. Quảng Bình",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Cao Thị Xuân",
+                            MembershipRank = "Chuẩn",
+                            PhoneNumber = "0937668877",
+                            RewardPoints = 12
+                        },
+                        new
+                        {
+                            CustomerId = 19,
+                            Address = "67 Nguyễn Văn Linh, Phường Nam Dương, Quận Hải Châu, TP. Đà Nẵng",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Mai Văn Khánh",
+                            MembershipRank = "Vàng",
+                            PhoneNumber = "0905223311",
+                            RewardPoints = 175
+                        },
+                        new
+                        {
+                            CustomerId = 20,
+                            Address = "25 Bạch Đằng, Phường Thạch Thang, Quận Hải Châu, TP. Đà Nẵng",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Lâm Thanh Hà",
+                            MembershipRank = "Bạc",
+                            PhoneNumber = "0983887766",
+                            RewardPoints = 95
+                        },
+                        new
+                        {
+                            CustomerId = 21,
+                            Address = "14 Trần Phú, Phường Lộc Thọ, TP. Nha Trang, TP. Khánh Hòa",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Tạ Quang Huy",
+                            MembershipRank = "Chuẩn",
+                            PhoneNumber = "0918776655",
+                            RewardPoints = 40
+                        },
+                        new
+                        {
+                            CustomerId = 22,
+                            Address = "8 Nguyễn Tất Thành, Phường Tân Lập, TP. Buôn Ma Thuột, TP. Đắk Lắk",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Hồ Ngọc Diệp",
+                            MembershipRank = "Vàng",
+                            PhoneNumber = "0976112233",
+                            RewardPoints = 130
+                        },
+                        new
+                        {
+                            CustomerId = 23,
+                            Address = "91 Hùng Vương, Phường Thới Bình, Quận Ninh Kiều, TP. Cần Thơ",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Nguyễn Bá Tùng",
+                            MembershipRank = "Bạc",
+                            PhoneNumber = "0932119988",
+                            RewardPoints = 60
+                        },
+                        new
+                        {
+                            CustomerId = 24,
+                            Address = "33 Nguyễn Đình Chiểu, Phường 5, TP. Mỹ Tho, TP. Tiền Giang",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Trần Mỹ Linh",
+                            MembershipRank = "Chuẩn",
+                            PhoneNumber = "0903112244",
+                            RewardPoints = 20
+                        },
+                        new
+                        {
+                            CustomerId = 25,
+                            Address = "7 Phạm Văn Đồng, Phường Hiệp Bình Chánh, TP. Thủ Đức, TP. Hồ Chí Minh",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Phạm Đức Duy",
+                            MembershipRank = "Vàng",
+                            PhoneNumber = "0967554433",
+                            RewardPoints = 240
+                        },
+                        new
+                        {
+                            CustomerId = 26,
+                            Address = "16 Hà Huy Tập, Phường Tân An, TP. Vinh, TP. Nghệ An",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Lữ Thị Mai",
+                            MembershipRank = "Chuẩn",
+                            PhoneNumber = "0917443322",
+                            RewardPoints = 35
+                        },
+                        new
+                        {
+                            CustomerId = 27,
+                            Address = "52 Trần Quốc Toản, Phường 8, TP. Đà Lạt, TP. Lâm Đồng",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Sơn Tùng Vinh",
+                            MembershipRank = "Bạc",
+                            PhoneNumber = "0988114477",
+                            RewardPoints = 110
+                        },
+                        new
+                        {
+                            CustomerId = 28,
+                            Address = "19 Trần Đại Nghĩa, Phường Tân Kiểng, Quận 7, TP. Hồ Chí Minh",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Châu Thị Kim",
+                            MembershipRank = "Kim cương",
+                            PhoneNumber = "0909224488",
+                            RewardPoints = 500
+                        },
+                        new
+                        {
+                            CustomerId = 29,
+                            Address = "63 Quốc lộ 1A, Phường Tân Thới Hiệp, Quận 12, TP. Hồ Chí Minh",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Bạch Văn Toàn",
+                            MembershipRank = "Chuẩn",
+                            PhoneNumber = "0938224411",
+                            RewardPoints = 48
+                        },
+                        new
+                        {
+                            CustomerId = 30,
+                            Address = "101 Lê Duẩn, Phường Hải Châu 1, Quận Hải Châu, TP. Đà Nẵng",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerName = "Đoàn Thanh Vân",
+                            MembershipRank = "Vàng",
+                            PhoneNumber = "0977778899",
+                            RewardPoints = 205
                         });
                 });
 
@@ -442,6 +742,366 @@ namespace MiniSupermarket.API.Migrations
                             Price = 120000m,
                             ProductName = "Hạt điều rang muối 250g",
                             StockQuantity = 45
+                        },
+                        new
+                        {
+                            ProductId = 21,
+                            Barcode = "8938000000021",
+                            CategoryId = 6,
+                            Price = 8000m,
+                            ProductName = "Hành lá 200g",
+                            StockQuantity = 120
+                        },
+                        new
+                        {
+                            ProductId = 22,
+                            Barcode = "8938000000022",
+                            CategoryId = 6,
+                            Price = 7000m,
+                            ProductName = "Ngò gai 100g",
+                            StockQuantity = 100
+                        },
+                        new
+                        {
+                            ProductId = 23,
+                            Barcode = "8938000000023",
+                            CategoryId = 6,
+                            Price = 7000m,
+                            ProductName = "Húng quế 100g",
+                            StockQuantity = 95
+                        },
+                        new
+                        {
+                            ProductId = 24,
+                            Barcode = "8938000000024",
+                            CategoryId = 6,
+                            Price = 15000m,
+                            ProductName = "Sả tươi 300g",
+                            StockQuantity = 80
+                        },
+                        new
+                        {
+                            ProductId = 25,
+                            Barcode = "8938000000025",
+                            CategoryId = 6,
+                            Price = 12000m,
+                            ProductName = "Ớt hiểm 100g",
+                            StockQuantity = 70
+                        },
+                        new
+                        {
+                            ProductId = 26,
+                            Barcode = "8938000000026",
+                            CategoryId = 6,
+                            Price = 18000m,
+                            ProductName = "Gừng tươi 250g",
+                            StockQuantity = 60
+                        },
+                        new
+                        {
+                            ProductId = 27,
+                            Barcode = "8938000000027",
+                            CategoryId = 7,
+                            Price = 189000m,
+                            ProductName = "Nho mẫu đơn Hàn Quốc 500g",
+                            StockQuantity = 35
+                        },
+                        new
+                        {
+                            ProductId = 28,
+                            Barcode = "8938000000028",
+                            CategoryId = 7,
+                            Price = 165000m,
+                            ProductName = "Cherry Mỹ 500g",
+                            StockQuantity = 40
+                        },
+                        new
+                        {
+                            ProductId = 29,
+                            Barcode = "8938000000029",
+                            CategoryId = 7,
+                            Price = 98000m,
+                            ProductName = "Kiwi New Zealand 6 trái",
+                            StockQuantity = 45
+                        },
+                        new
+                        {
+                            ProductId = 30,
+                            Barcode = "8938000000030",
+                            CategoryId = 7,
+                            Price = 89000m,
+                            ProductName = "Lê Hàn Quốc 1kg",
+                            StockQuantity = 50
+                        },
+                        new
+                        {
+                            ProductId = 31,
+                            Barcode = "8938000000031",
+                            CategoryId = 7,
+                            Price = 125000m,
+                            ProductName = "Táo Envy Mỹ 1kg",
+                            StockQuantity = 42
+                        },
+                        new
+                        {
+                            ProductId = 32,
+                            Barcode = "8938000000032",
+                            CategoryId = 7,
+                            Price = 79000m,
+                            ProductName = "Cam Úc 1kg",
+                            StockQuantity = 55
+                        },
+                        new
+                        {
+                            ProductId = 33,
+                            Barcode = "8938000000033",
+                            CategoryId = 8,
+                            Price = 55000m,
+                            ProductName = "Trứng gà hữu cơ 10 quả",
+                            StockQuantity = 70
+                        },
+                        new
+                        {
+                            ProductId = 34,
+                            Barcode = "8938000000034",
+                            CategoryId = 8,
+                            Price = 62000m,
+                            ProductName = "Sữa tươi hữu cơ 1L",
+                            StockQuantity = 65
+                        },
+                        new
+                        {
+                            ProductId = 35,
+                            Barcode = "8938000000035",
+                            CategoryId = 8,
+                            Price = 22000m,
+                            ProductName = "Đậu hũ non hữu cơ 300g",
+                            StockQuantity = 55
+                        },
+                        new
+                        {
+                            ProductId = 36,
+                            Barcode = "8938000000036",
+                            CategoryId = 8,
+                            Price = 38000m,
+                            ProductName = "Bún gạo lứt hữu cơ 500g",
+                            StockQuantity = 48
+                        },
+                        new
+                        {
+                            ProductId = 37,
+                            Barcode = "8938000000037",
+                            CategoryId = 8,
+                            Price = 210000m,
+                            ProductName = "Mật ong rừng nguyên chất 500ml",
+                            StockQuantity = 30
+                        },
+                        new
+                        {
+                            ProductId = 38,
+                            Barcode = "8938000000038",
+                            CategoryId = 8,
+                            Price = 95000m,
+                            ProductName = "Dầu dừa ép lạnh 250ml",
+                            StockQuantity = 40
+                        },
+                        new
+                        {
+                            ProductId = 39,
+                            Barcode = "8938000000039",
+                            CategoryId = 9,
+                            Price = 68000m,
+                            ProductName = "Nước ép cam nguyên chất 1L",
+                            StockQuantity = 50
+                        },
+                        new
+                        {
+                            ProductId = 40,
+                            Barcode = "8938000000040",
+                            CategoryId = 9,
+                            Price = 45000m,
+                            ProductName = "Nước ép cần tây 500ml",
+                            StockQuantity = 45
+                        },
+                        new
+                        {
+                            ProductId = 41,
+                            Barcode = "8938000000041",
+                            CategoryId = 9,
+                            Price = 120000m,
+                            ProductName = "Trà xanh matcha 200g",
+                            StockQuantity = 35
+                        },
+                        new
+                        {
+                            ProductId = 42,
+                            Barcode = "8938000000042",
+                            CategoryId = 9,
+                            Price = 110000m,
+                            ProductName = "Cà phê rang xay 250g",
+                            StockQuantity = 40
+                        },
+                        new
+                        {
+                            ProductId = 43,
+                            Barcode = "8938000000043",
+                            CategoryId = 9,
+                            Price = 35000m,
+                            ProductName = "Nước dừa tươi 1L",
+                            StockQuantity = 60
+                        },
+                        new
+                        {
+                            ProductId = 44,
+                            Barcode = "8938000000044",
+                            CategoryId = 9,
+                            Price = 75000m,
+                            ProductName = "Sữa hạt điều 1L",
+                            StockQuantity = 38
+                        },
+                        new
+                        {
+                            ProductId = 45,
+                            Barcode = "8938000000045",
+                            CategoryId = 10,
+                            Price = 89000m,
+                            ProductName = "Yến mạch cán dẹt 1kg",
+                            StockQuantity = 55
+                        },
+                        new
+                        {
+                            ProductId = 46,
+                            Barcode = "8938000000046",
+                            CategoryId = 10,
+                            Price = 48000m,
+                            ProductName = "Gạo lứt huyết rồng 1kg",
+                            StockQuantity = 90
+                        },
+                        new
+                        {
+                            ProductId = 47,
+                            Barcode = "8938000000047",
+                            CategoryId = 10,
+                            Price = 32000m,
+                            ProductName = "Đậu xanh cà vỏ 500g",
+                            StockQuantity = 75
+                        },
+                        new
+                        {
+                            ProductId = 48,
+                            Barcode = "8938000000048",
+                            CategoryId = 10,
+                            Price = 145000m,
+                            ProductName = "Hạt chia Úc 500g",
+                            StockQuantity = 42
+                        },
+                        new
+                        {
+                            ProductId = 49,
+                            Barcode = "8938000000049",
+                            CategoryId = 10,
+                            Price = 85000m,
+                            ProductName = "Hạt lanh vàng 500g",
+                            StockQuantity = 36
+                        },
+                        new
+                        {
+                            ProductId = 50,
+                            Barcode = "8938000000050",
+                            CategoryId = 10,
+                            Price = 135000m,
+                            ProductName = "Ngũ cốc granola 500g",
+                            StockQuantity = 6
+                        },
+                        new
+                        {
+                            ProductId = 51,
+                            Barcode = "8938000000051",
+                            CategoryId = 11,
+                            Price = 65000m,
+                            ProductName = "Bơ sáp Đắk Lắk 1kg",
+                            StockQuantity = 48
+                        },
+                        new
+                        {
+                            ProductId = 52,
+                            Barcode = "8938000000052",
+                            CategoryId = 11,
+                            Price = 135000m,
+                            ProductName = "Hạnh nhân rang 250g",
+                            StockQuantity = 40
+                        },
+                        new
+                        {
+                            ProductId = 53,
+                            Barcode = "8938000000053",
+                            CategoryId = 11,
+                            Price = 155000m,
+                            ProductName = "Óc chó Mỹ 250g",
+                            StockQuantity = 33
+                        },
+                        new
+                        {
+                            ProductId = 54,
+                            Barcode = "8938000000054",
+                            CategoryId = 11,
+                            Price = 175000m,
+                            ProductName = "Hạt mắc ca 250g",
+                            StockQuantity = 8
+                        },
+                        new
+                        {
+                            ProductId = 55,
+                            Barcode = "8938000000055",
+                            CategoryId = 11,
+                            Price = 78000m,
+                            ProductName = "Hạt bí rang 250g",
+                            StockQuantity = 45
+                        },
+                        new
+                        {
+                            ProductId = 56,
+                            Barcode = "8938000000056",
+                            CategoryId = 11,
+                            Price = 55000m,
+                            ProductName = "Đậu phộng rang 500g",
+                            StockQuantity = 60
+                        },
+                        new
+                        {
+                            ProductId = 57,
+                            Barcode = "8938000000057",
+                            CategoryId = 12,
+                            Price = 99000m,
+                            ProductName = "Combo rau sạch 5 loại",
+                            StockQuantity = 25
+                        },
+                        new
+                        {
+                            ProductId = 58,
+                            Barcode = "8938000000058",
+                            CategoryId = 12,
+                            Price = 450000m,
+                            ProductName = "Giỏ quà trái cây cao cấp",
+                            StockQuantity = 5
+                        },
+                        new
+                        {
+                            ProductId = 59,
+                            Barcode = "8938000000059",
+                            CategoryId = 12,
+                            Price = 189000m,
+                            ProductName = "Combo ăn sáng dinh dưỡng",
+                            StockQuantity = 20
+                        },
+                        new
+                        {
+                            ProductId = 60,
+                            Barcode = "8938000000060",
+                            CategoryId = 12,
+                            Price = 229000m,
+                            ProductName = "Combo nấu lẩu rau củ 4 người",
+                            StockQuantity = 9
                         });
                 });
 
@@ -489,7 +1149,7 @@ namespace MiniSupermarket.API.Migrations
                             UserId = 1,
                             FullName = "Nguyễn Quản Trị",
                             IsActive = true,
-                            Password = "123456",
+                            Password = "AQAAAAIAAYagAAAAED3wRxGMUeaNMgjRpd1Qwv4ZlslSctsUwxSpc5HRWJHdMnkzp8Z6K31HQpqU1zFuvg==",
                             Role = "Admin",
                             Username = "admin01"
                         },
@@ -498,7 +1158,7 @@ namespace MiniSupermarket.API.Migrations
                             UserId = 2,
                             FullName = "Trần Giám Đốc",
                             IsActive = true,
-                            Password = "123456",
+                            Password = "AQAAAAIAAYagAAAAED3wRxGMUeaNMgjRpd1Qwv4ZlslSctsUwxSpc5HRWJHdMnkzp8Z6K31HQpqU1zFuvg==",
                             Role = "Admin",
                             Username = "admin02"
                         },
@@ -507,7 +1167,7 @@ namespace MiniSupermarket.API.Migrations
                             UserId = 3,
                             FullName = "Lê Thu Ngân",
                             IsActive = true,
-                            Password = "123456",
+                            Password = "AQAAAAIAAYagAAAAED3wRxGMUeaNMgjRpd1Qwv4ZlslSctsUwxSpc5HRWJHdMnkzp8Z6K31HQpqU1zFuvg==",
                             Role = "Cashier",
                             Username = "cashier01"
                         },
@@ -516,7 +1176,7 @@ namespace MiniSupermarket.API.Migrations
                             UserId = 4,
                             FullName = "Phạm Bán Hàng",
                             IsActive = true,
-                            Password = "123456",
+                            Password = "AQAAAAIAAYagAAAAED3wRxGMUeaNMgjRpd1Qwv4ZlslSctsUwxSpc5HRWJHdMnkzp8Z6K31HQpqU1zFuvg==",
                             Role = "Cashier",
                             Username = "cashier02"
                         },
@@ -525,7 +1185,7 @@ namespace MiniSupermarket.API.Migrations
                             UserId = 5,
                             FullName = "Hoàng Thu Ngân",
                             IsActive = true,
-                            Password = "123456",
+                            Password = "AQAAAAIAAYagAAAAED3wRxGMUeaNMgjRpd1Qwv4ZlslSctsUwxSpc5HRWJHdMnkzp8Z6K31HQpqU1zFuvg==",
                             Role = "Cashier",
                             Username = "cashier03"
                         },
@@ -534,7 +1194,7 @@ namespace MiniSupermarket.API.Migrations
                             UserId = 6,
                             FullName = "Vũ Thị Quầy",
                             IsActive = true,
-                            Password = "123456",
+                            Password = "AQAAAAIAAYagAAAAED3wRxGMUeaNMgjRpd1Qwv4ZlslSctsUwxSpc5HRWJHdMnkzp8Z6K31HQpqU1zFuvg==",
                             Role = "Cashier",
                             Username = "cashier04"
                         },
@@ -543,7 +1203,7 @@ namespace MiniSupermarket.API.Migrations
                             UserId = 7,
                             FullName = "Đỗ Bán Lẻ",
                             IsActive = true,
-                            Password = "123456",
+                            Password = "AQAAAAIAAYagAAAAED3wRxGMUeaNMgjRpd1Qwv4ZlslSctsUwxSpc5HRWJHdMnkzp8Z6K31HQpqU1zFuvg==",
                             Role = "Cashier",
                             Username = "cashier05"
                         },
@@ -552,7 +1212,7 @@ namespace MiniSupermarket.API.Migrations
                             UserId = 8,
                             FullName = "Ngô Quản Kho",
                             IsActive = true,
-                            Password = "123456",
+                            Password = "AQAAAAIAAYagAAAAED3wRxGMUeaNMgjRpd1Qwv4ZlslSctsUwxSpc5HRWJHdMnkzp8Z6K31HQpqU1zFuvg==",
                             Role = "Warehouse",
                             Username = "ware01"
                         },
@@ -561,7 +1221,7 @@ namespace MiniSupermarket.API.Migrations
                             UserId = 9,
                             FullName = "Bùi Kiểm Kê",
                             IsActive = true,
-                            Password = "123456",
+                            Password = "AQAAAAIAAYagAAAAED3wRxGMUeaNMgjRpd1Qwv4ZlslSctsUwxSpc5HRWJHdMnkzp8Z6K31HQpqU1zFuvg==",
                             Role = "Warehouse",
                             Username = "ware02"
                         },
@@ -570,7 +1230,7 @@ namespace MiniSupermarket.API.Migrations
                             UserId = 10,
                             FullName = "Dương Thủ Kho",
                             IsActive = true,
-                            Password = "123456",
+                            Password = "AQAAAAIAAYagAAAAED3wRxGMUeaNMgjRpd1Qwv4ZlslSctsUwxSpc5HRWJHdMnkzp8Z6K31HQpqU1zFuvg==",
                             Role = "Warehouse",
                             Username = "ware03"
                         },
@@ -579,7 +1239,7 @@ namespace MiniSupermarket.API.Migrations
                             UserId = 11,
                             FullName = "Lý Nhập Hàng",
                             IsActive = true,
-                            Password = "123456",
+                            Password = "AQAAAAIAAYagAAAAED3wRxGMUeaNMgjRpd1Qwv4ZlslSctsUwxSpc5HRWJHdMnkzp8Z6K31HQpqU1zFuvg==",
                             Role = "Warehouse",
                             Username = "ware04"
                         },
@@ -588,7 +1248,7 @@ namespace MiniSupermarket.API.Migrations
                             UserId = 12,
                             FullName = "Đặng Hỗ Trợ",
                             IsActive = true,
-                            Password = "123456",
+                            Password = "AQAAAAIAAYagAAAAED3wRxGMUeaNMgjRpd1Qwv4ZlslSctsUwxSpc5HRWJHdMnkzp8Z6K31HQpqU1zFuvg==",
                             Role = "Admin",
                             Username = "admin_backup"
                         },
@@ -597,7 +1257,7 @@ namespace MiniSupermarket.API.Migrations
                             UserId = 13,
                             FullName = "Hồ Ca Chiều",
                             IsActive = true,
-                            Password = "123456",
+                            Password = "AQAAAAIAAYagAAAAED3wRxGMUeaNMgjRpd1Qwv4ZlslSctsUwxSpc5HRWJHdMnkzp8Z6K31HQpqU1zFuvg==",
                             Role = "Cashier",
                             Username = "cashier06"
                         },
@@ -606,7 +1266,7 @@ namespace MiniSupermarket.API.Migrations
                             UserId = 14,
                             FullName = "Trương Vận Chuyển",
                             IsActive = true,
-                            Password = "123456",
+                            Password = "AQAAAAIAAYagAAAAED3wRxGMUeaNMgjRpd1Qwv4ZlslSctsUwxSpc5HRWJHdMnkzp8Z6K31HQpqU1zFuvg==",
                             Role = "Warehouse",
                             Username = "ware05"
                         },
@@ -615,7 +1275,7 @@ namespace MiniSupermarket.API.Migrations
                             UserId = 15,
                             FullName = "Mai Giám Sát",
                             IsActive = true,
-                            Password = "123456",
+                            Password = "AQAAAAIAAYagAAAAED3wRxGMUeaNMgjRpd1Qwv4ZlslSctsUwxSpc5HRWJHdMnkzp8Z6K31HQpqU1zFuvg==",
                             Role = "Admin",
                             Username = "supervisor"
                         });

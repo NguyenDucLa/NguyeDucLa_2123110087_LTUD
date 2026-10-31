@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniSupermarket.API.Data;
+using MiniSupermarket.API.DTOs;
+using MiniSupermarket.API.Helpers;
 using MiniSupermarket.API.Models;
 
 namespace MiniSupermarket.API.Controllers
@@ -23,9 +25,51 @@ namespace MiniSupermarket.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var users = await _context.Users.AsNoTracking()
-                .Select(u => new { u.UserId, u.Username, u.FullName, u.Email, u.Role, u.IsActive })
+                .Select(u => new UserDto
+                {
+                    UserId = u.UserId,
+                    Username = u.Username,
+                    FullName = u.FullName,
+                    Email = u.Email,
+                    Role = u.Role,
+                    IsActive = u.IsActive
+                })
                 .ToListAsync();
             return Ok(users);
+        }
+
+        // 1b. READ: Danh sách tài khoản có PHÂN TRANG (.Skip / .Take)
+        [HttpGet("paged")]
+        public async Task<IActionResult> GetPaged([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            if (page < 1) page = 1;
+            if (pageSize < 1) pageSize = 10;
+
+            var query = _context.Users.AsNoTracking().OrderBy(u => u.UserId);
+
+            int totalItems = await query.CountAsync();
+            var items = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(u => new UserDto
+                {
+                    UserId = u.UserId,
+                    Username = u.Username,
+                    FullName = u.FullName,
+                    Email = u.Email,
+                    Role = u.Role,
+                    IsActive = u.IsActive
+                })
+                .ToListAsync();
+
+            return Ok(new PagedResult<UserDto>
+            {
+                Page = page,
+                PageSize = pageSize,
+                TotalItems = totalItems,
+                TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize),
+                Data = items
+            });
         }
 
         // 2. READ: Chi tiết tài khoản
@@ -34,7 +78,15 @@ namespace MiniSupermarket.API.Controllers
         {
             var user = await _context.Users.AsNoTracking()
                 .Where(u => u.UserId == id)
-                .Select(u => new { u.UserId, u.Username, u.FullName, u.Email, u.Role, u.IsActive })
+                .Select(u => new UserDto
+                {
+                    UserId = u.UserId,
+                    Username = u.Username,
+                    FullName = u.FullName,
+                    Email = u.Email,
+                    Role = u.Role,
+                    IsActive = u.IsActive
+                })
                 .FirstOrDefaultAsync();
 
             if (user == null) return NotFound(new { message = "Không tìm thấy tài khoản!" });
@@ -56,7 +108,7 @@ namespace MiniSupermarket.API.Controllers
             var user = new User
             {
                 Username = dto.Username.Trim(),
-                Password = dto.Password,
+                Password = PasswordHelper.Hash(dto.Password), // luôn lưu mật khẩu đã băm
                 FullName = dto.FullName,
                 Email = dto.Email,
                 Role = string.IsNullOrWhiteSpace(dto.Role) ? "Cashier" : dto.Role,
@@ -66,8 +118,15 @@ namespace MiniSupermarket.API.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new { id = user.UserId },
-                new { user.UserId, user.Username, user.FullName, user.Role, user.IsActive });
+            return CreatedAtAction(nameof(GetById), new { id = user.UserId }, new UserDto
+            {
+                UserId = user.UserId,
+                Username = user.Username,
+                FullName = user.FullName,
+                Email = user.Email,
+                Role = user.Role,
+                IsActive = user.IsActive
+            });
         }
 
         // 4. UPDATE: Đặt lại mật khẩu
@@ -78,7 +137,7 @@ namespace MiniSupermarket.API.Controllers
             if (user == null) return NotFound(new { message = "Không tìm thấy tài khoản!" });
             if (string.IsNullOrWhiteSpace(dto.NewPassword)) return BadRequest(new { message = "Mật khẩu mới không được trống!" });
 
-            user.Password = dto.NewPassword;
+            user.Password = PasswordHelper.Hash(dto.NewPassword); // băm mật khẩu mới
             await _context.SaveChangesAsync();
             return NoContent();
         }
